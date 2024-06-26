@@ -1,0 +1,425 @@
+{% extends "membres/gestionnaire/base_gestion.html"%}
+{% block centre%}
+<div class="home-content">
+        <div class="overview-boxes">
+          <div class="box">
+            <div class="right-side">
+              <div class="box-topic">stocks</div>
+              <div class="number">{{stocktotal[0]}}</div>
+              <div class="indicator">
+                <i class="bx bx-up-arrow-alt"></i>
+                <span class="text">Total produit en stock</span>
+              </div>
+            </div>
+            <i class="bx bx-cart-alt cart"></i>
+          </div>
+          <div class="box">
+            <div class="right-side">
+              <div class="box-topic">Stock faible</div>
+              <div class="number">{{stockfaible[0]}}</div>
+              <div class="indicator">
+                <i class="bx bx-up-arrow-alt"></i>
+                <span class="text">Total stock faible</span>
+              </div>
+            </div>
+            <i class="bx bxs-cart-add cart two"></i>
+          </div>
+          <div class="box">
+            <div class="right-side">
+              <div class="box-topic">Montant</div>
+              <div class="number">{{montantstock[0]}}</div>
+              <div class="indicator">
+                <i class="bx bx-down-arrow-alt down"></i>
+                <span class="text">Total montant stock</span>
+              </div>
+            </div>
+            <i class="bx bxs-cart-download cart four"></i>
+          </div>
+        </div>
+
+    <div class="overview-boxes">
+    <div class="box1">
+        <div class="right-side">
+            <div class="box-topic">Filtre du stock en fonction de l'état</div>
+            <select id="categoriefiltre" name="categoriefiltre" required>
+                <option value="" disabled selected>Sélectionnez un état</option>
+                <option value="bon">Bon</option>
+                <option value="faible">Faible</option>
+                <option value="vide">Vide</option>
+                <option value="tout">Tout</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+    <div class="sales-boxes">
+    <div class="recent-sales box">
+        <div class="title">
+            <p>Stock</p>
+            <!-- Flash messages handling -->
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <p class="alert" style="color:green;">{{ message }}</p><br>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            <button id="open-popup">Faire une mise à jour</button>
+        </div>
+        <div class="sales-details">
+            <ul class="details" id="details-produit">
+                <li class="topic">Nom</li>
+                {% for row in resultat1 %}
+                <li class="detail-item" data-index="{{ loop.index0 }}" data-etat="{% if row[3] > row[2] %}faible{% elif row[3] == 0 %}vide{% else %}bon{% endif %}"><a href="#">{{ row[0] }}</a></li>
+                {% endfor %}
+            </ul>
+            <ul class="details" id="details-stock">
+                <li class="topic">Stock</li>
+                {% for row in resultat1 %}
+                <li class="detail-item" data-index="{{ loop.index0 }}" data-etat="{% if row[3] > row[2] %}faible{% elif row[3] == 0 %}vide{% else %}bon{% endif %}"><a href="#">{{ row[2] }}</a></li>
+                {% endfor %}
+            </ul>
+            <ul class="details" id="details-categorie">
+                <li class="topic">Catégorie</li>
+                {% for row in resultat1 %}
+                <li class="detail-item" data-index="{{ loop.index0 }}" data-etat="{% if row[3] > row[2] %}faible{% elif row[3] == 0 %}vide{% else %}bon{% endif %}"><a href="#">{{ row[1] }}</a></li>
+                {% endfor %}
+            </ul>
+            <ul class="details" id="details-etat">
+                <li class="topic">Etat</li>
+                {% for row in resultat1 %}
+                <li class="detail-item" data-index="{{ loop.index0 }}" data-etat="{% if row[3] > row[2] %}faible{% elif row[3] == 0 %}vide{% else %}bon{% endif %}">
+                    <a href="#" style="{% if row[3] > row[2] or row[3] == 0 %}color:red;{% else %}color:blue;{% endif %}">
+                        {% if row[3] > row[2] %}
+                            Faible
+                        {% elif row[3] == 0 %}
+                            Vide
+                        {% else %}
+                            Bon
+                        {% endif %}
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="button">
+            <a href="#" id="moins">Précédent</a>
+            <a href="#" id="plus">Voir plus</a>
+        </div>
+    </div>
+</div><br>
+
+        <div class="sales-boxes">
+          <div class="recent-sales box">
+            <div class="title">
+                <p>Listes des mises à jour stock</p>
+                {% with messages = get_flashed_messages() %}
+                  {% if messages %}
+                    {% for message in messages %}
+                      <p class="alert" style="color:green;font-size:20px;">{{ message }}</p><br>
+                    {% endfor %}
+                  {% endif %}
+                {% endwith %}
+            </div>
+            <div class="sales-details">
+              <ul class="details" id="details-date">
+                <li class="topic">Date</li>
+                {% for row in resultat %}
+                  <li><a href="#">{{ row[3] }}</a></li>
+                  {% endfor %}
+              </ul>
+              <ul class="details" id="details-nom">
+                  <li class="topic">Produit</li>
+                  {% for row in resultat %}
+                  <li><a href="#">{{ row[0] }}</a></li>
+                  {% endfor %}
+              </ul>
+              <ul class="details" id="details-quantite">
+                  <li class="topic">Quantité ajouté</li>
+                  {% for row in resultat %}
+                  <li><a href="#">{{ row[2] }}</a></li>
+                  {% endfor %}
+              </ul>
+                <ul class="details" id="details-action">
+                    <li class="topic">Action</li>
+                    {% for row in resultat %}
+                    <li>
+                    <div class="icon">
+                        <a href="{{ url_for('gestion_modifier_stock', id_stock=row[4]) }}"><i class='bx bx-edit edit-icon' style='font-size: 23px; color: blue;'></i></a>
+                    </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="button">
+              <a href="#" id="precedent">Précédent</a>
+              <a href="#" id="voir-plus">Voir plus</a>
+            </div>
+          </div>
+        </div><br>
+
+      <div id="popup" class="popup">
+        <div class="popup-content">
+            <span class="close" id="close-popup">&times;</span>
+            <h2>Ajout de stock</h2><br>
+            <form id="stock-form" method="post" action="{{url_for('stock')}}" >
+                <label for="produit">Produit</label>
+                <select id="produit" name="produit" required>
+                    <option value="">Sélectionnez un produit</option>
+                    {% for produit in produits %}
+                        <option value="{{ produit[0] }}">{{ produit[1] }}</option>
+                    {% endfor %}
+                </select>
+                <label for="nombre">Nombre</label>
+                <input type="number" id="nombre" name="nombre" required>
+                <button id="add-button">Ajouter</button>
+
+
+            <table id="stock-table">
+                <thead>
+                    <tr>
+                        <td>Id</td>
+                        <td>Nom</td>
+                        <td>Quantité</td>
+                        <td>Prix</td>
+                        <td>Catégorie</td>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+
+            <div><button class="btn12"><a href="{{url_for('gestion_stock')}}" style="text-decoration:none;
+    color: #fff;">Retour</a></button>
+                <button id="btn11" type="submit">Valider</button>
+            </div>
+            </form>
+        </div>
+      </div>
+    </div>
+
+<div class="popup0" id="confirmationPopup">
+        <div class="confirmation-container">
+            <h2>Êtes-vous sûr de vouloir supprimer ce stock?</h2>
+            <form id="deleteForm" method="POST">
+                <button type="submit" class="btn-confirm">Confirmer</button>
+                <button type="button" class="btn-cancel" onclick="closePopup()">Annuler</button>
+            </form>
+        </div>
+</div>
+
+</div>
+
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var addButton = document.querySelector('#add-button');
+        var stockTable = document.querySelector('#stock-table tbody');
+        var submitButton = document.querySelector('button[type="submit"]');
+
+        addButton.addEventListener('click', function(event) {
+            event.preventDefault();
+
+            var produitId = document.querySelector('#produit').value;
+            var nombre = document.querySelector('#nombre').value;
+
+            fetch('/get_product_info/' + produitId)
+                .then(response => response.json())
+                .then(data => {
+                    var newRow = document.createElement('tr');
+                    newRow.innerHTML = '<td>' + produitId + '</td>' +
+                                        '<td>' + data.nom + '</td>' +
+                                        '<td>' + nombre + '</td>' +
+                                        '<td>' + data.prix + '</td>' +
+                                        '<td>' + data.designation + '</td>' +
+                                        '<td><span class="delete-icon">&times;</span></td>';
+
+                    stockTable.appendChild(newRow);
+
+                    // Add event listener to the delete icon
+                    newRow.querySelector('.delete-icon').addEventListener('click', function() {
+                        stockTable.removeChild(newRow);
+                    });
+                })
+                .catch(error => {
+                    console.error('Erreur lors de la récupération des informations du produit :', error);
+                });
+        });
+
+        submitButton.addEventListener('click', function(event) {
+            event.preventDefault();
+
+            var rows = stockTable.querySelectorAll('tr');
+            var orderData = [];
+
+            rows.forEach(row => {
+                var rowData = {
+                    produit_id: parseInt(row.cells[0].textContent),
+                    nombre: parseInt(row.cells[2].textContent),
+                };
+                orderData.push(rowData);
+            });
+
+            fetch('/submit_stock', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(orderData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Stock ajouté avec succès:', data);
+                stockTable.innerHTML = '';
+                alert('Stock ajouté avec succès!');
+            })
+            .catch(error => {
+                console.error('Erreur lors de la soumission de la commande:', error);
+                alert('Erreur lors de la soumission de la commande.');
+            });
+        });
+    });
+</script>
+
+ <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const deleteIcons = document.querySelectorAll('.delete-icon');
+            const popup = document.getElementById('confirmationPopup');
+            const deleteForm = document.getElementById('deleteForm');
+
+            deleteIcons.forEach(icon => {
+                icon.addEventListener('click', function() {
+                    const id = this.getAttribute('data-id');
+                    deleteForm.action = `/supprimer_stock/${id}`;
+                    popup.style.display = 'flex';
+                });
+            });
+        });
+
+        function closePopup() {
+            document.getElementById('confirmationPopup').style.display = 'none';
+        }
+    </script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const articlesParPage = 7;
+    let pageActuelle = 1;
+
+    const sectionsDetails = [
+        document.getElementById('details-produit'),
+        document.getElementById('details-stock'),
+        document.getElementById('details-categorie'),
+        document.getElementById('details-etat')
+    ];
+
+    function afficherPage(page) {
+        sectionsDetails.forEach(section => {
+            const articles = section.querySelectorAll('li:not(.topic)');
+            articles.forEach((article, index) => {
+                article.style.display = (index >= (page - 1) * articlesParPage && index < page * articlesParPage) ? '' : 'none';
+            });
+        });
+    }
+
+    document.getElementById('plus').addEventListener('click', function(e) {
+        e.preventDefault();
+        const totalArticles = sectionsDetails[0].querySelectorAll('li:not(.topic)').length;
+        const totalPages = Math.ceil(totalArticles / articlesParPage);
+        if (pageActuelle < totalPages) {
+            pageActuelle++;
+            afficherPage(pageActuelle);
+        }
+    });
+
+    document.getElementById('moins').addEventListener('click', function(e) {
+        e.preventDefault();
+        if (pageActuelle > 1) {
+            pageActuelle--;
+            afficherPage(pageActuelle);
+        }
+    });
+
+    // Initialiser l'affichage de la première page
+    afficherPage(pageActuelle);
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const articlesParPage = 7;
+    let pageActuelle = 1;
+
+    const sectionsDetails = [
+        document.getElementById('details-date'),
+        document.getElementById('details-nom'),
+        document.getElementById('details-quantite'),
+        document.getElementById('details-action')
+    ];
+
+    function afficherPage(page) {
+        sectionsDetails.forEach(section => {
+            const articles = section.querySelectorAll('li:not(.topic)');
+            articles.forEach((article, index) => {
+                article.style.display = (index >= (page - 1) * articlesParPage && index < page * articlesParPage) ? '' : 'none';
+            });
+        });
+    }
+
+    document.getElementById('voir-plus').addEventListener('click', function(e) {
+        e.preventDefault();
+        const totalArticles = sectionsDetails[0].querySelectorAll('li:not(.topic)').length;
+        const totalPages = Math.ceil(totalArticles / articlesParPage);
+        if (pageActuelle < totalPages) {
+            pageActuelle++;
+            afficherPage(pageActuelle);
+        }
+    });
+
+    document.getElementById('precedent').addEventListener('click', function(e) {
+        e.preventDefault();
+        if (pageActuelle > 1) {
+            pageActuelle--;
+            afficherPage(pageActuelle);
+        }
+    });
+
+    // Initialiser l'affichage de la première page
+    afficherPage(pageActuelle);
+});
+</script>
+
+<script>
+document.getElementById('categoriefiltre').addEventListener('change', function() {
+    var selectedValue = this.value;
+    var detailItems = document.querySelectorAll('.detail-item');
+
+    detailItems.forEach(function(item) {
+        if (selectedValue === 'tout' || item.getAttribute('data-etat') === selectedValue) {
+            item.style.display = 'list-item';
+        } else {
+            item.style.display = 'none';
+        }
+    });
+
+    // Après avoir filtré les éléments, nous devons nous assurer que les lignes associées restent synchronisées.
+    var indexes = Array.from(detailItems).filter(function(item) {
+        return item.style.display === 'list-item';
+    }).map(function(item) {
+        return item.getAttribute('data-index');
+    });
+
+    document.querySelectorAll('.details').forEach(function(ul) {
+        Array.from(ul.children).forEach(function(li, index) {
+            if (index === 0) return; // Skip the header
+            if (indexes.includes((index - 1).toString())) {
+                li.style.display = 'list-item';
+            } else {
+                li.style.display = 'none';
+            }
+        });
+    });
+});
+</script>
+{% endblock %}

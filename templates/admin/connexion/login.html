@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Page de connexion</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='connexion.css') }}">
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+  </head>
+  <body>
+    <div class="bg-img" style="background-image: url({{ url_for('static', filename='image/bg.jpg') }});
+        height: 100vh;
+        background-size: cover;
+        background-position: center;">
+      <div class="content">
+          <div class="hors"><a href="{{url_for('accueil')}}">Revenir sur la page d'accueil</a></div>
+        <header>Connexion à mon gestionnaire</header>
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            {% for message in messages %}
+              <div class="alert">{{ message }}</div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+        <form action="/" method="post">
+          <div class="field">
+            <i class="fas fa-user"></i>
+            <input type="text" required placeholder="Login" name="login">
+          </div>
+          <div class="field space">
+            <i class="fas fa-lock"></i>
+            <input type="password" class="pass-key" required placeholder="Mot de passe" name="password">
+          </div>
+          <div class="pass">
+            <a id="open-popup">Mot de passe oublié ?</a>
+          </div>
+          <div class="field">
+            <input type="submit" value="Se connecter">
+          </div>
+        </form>
+      </div>
+    </div>
+
+  <div id="popup" class="popup">
+    <div class="popup-content">
+        <span class="close" id="close-popup">&times;</span>
+      <h2>Récupération de mot de passe </h2><br>
+        <form>
+             <label for="email">Entrez votre adresse Email</label>
+              <input type="email" id="email" name="email" required>
+              <button type="submit" id="monemail">Confirmer</button>
+        </form>
+    </div>
+  </div>
+
+  <div id="popup1" class="popup1">
+    <div class="popup-content">
+        <span class="close" id="close-popup1">&times;</span>
+      <h2>Récupération de mot de passe </h2><br>
+        <form>
+             <label for="code">Entrez le code recu par Email</label>
+              <input type="text" id="code" name="email" required>
+              <button type="submit" id="codeemail">Confirmer</button>
+        </form>
+    </div>
+  </div>
+
+  <div id="popup2" class="popup2">
+    <div class="popup-content">
+        <span class="close" id="close-popup2">&times;</span>
+      <h2>Récupération de mot de passe </h2><br>
+        <form>
+             <label for="nouvpass">Entrez le nouveau mot de passe</label>
+             <input type="password" id="nouvpass" name="nouvpass" required>
+              <label for="confnouvpass">Confirmez le nouveau mot de passe</label>
+              <input type="password" id="confnouvpass" name="nouvpass" required>
+              <button type="submit" id="confimer">Confirmer</button>
+        </form>
+    </div>
+  </div>
+
+
+  <script>
+       // Ouvrir le popup lorsqu'on clique sur le bouton "Ajouter un Produit"
+    document.getElementById("open-popup").addEventListener("click", function () {
+    document.getElementById("popup").style.display = "block";
+    document.querySelector(".content").style.display = "none";
+});
+
+// Fermer le popup lorsqu'on clique sur le bouton de fermeture
+document.getElementById("close-popup").addEventListener("click", function () {
+    document.getElementById("popup").style.display = "none";
+});
+
+// Fermer le popup lorsque l'utilisateur clique en dehors du contenu du popup
+window.onclick = function (event) {
+    var popup = document.getElementById("popup");
+    if (event.target == popup) {
+        popup.style.display = "block";
+    }
+}
+
+     </script>
+
+  <script>
+       // Ouvrir le popup lorsqu'on clique sur le bouton "Ajouter un Produit"
+    document.getElementById("monemail").addEventListener("click", function () {
+    document.getElementById("popup1").style.display = "block";
+    document.querySelector(".content").style.display = "none";
+    document.querySelector(".popup").style.display = "none";
+});
+
+// Fermer le popup lorsqu'on clique sur le bouton de fermeture
+document.getElementById("close-popup").addEventListener("click", function () {
+    document.getElementById("popup").style.display = "none";
+});
+
+// Fermer le popup lorsque l'utilisateur clique en dehors du contenu du popup
+window.onclick = function (event) {
+    var popup1 = document.getElementById("popup1");
+    if (event.target == popup1) {
+        popup.style.display = "block";
+    }
+}
+
+     </script>
+
+  <script>
+       // Ouvrir le popup lorsqu'on clique sur le bouton "Ajouter un Produit"
+    document.getElementById("codeemail").addEventListener("click", function () {
+    document.getElementById("popup2").style.display = "block";
+    document.querySelector(".content").style.display = "none";
+    document.querySelector(".popup").style.display = "none";
+    document.querySelector(".popup1").style.display = "none";
+});
+
+// Fermer le popup lorsqu'on clique sur le bouton de fermeture
+document.getElementById("close-popup").addEventListener("click", function () {
+    document.getElementById("popup").style.display = "none";
+});
+
+// Fermer le popup lorsque l'utilisateur clique en dehors du contenu du popup
+window.onclick = function (event) {
+    var popup2 = document.getElementById("popup2");
+    if (event.target == popup1) {
+        popup.style.display = "block";
+    }
+}
+
+     </script>
+
+  <script>
+       // Ouvrir le popup lorsqu'on clique sur le bouton "Ajouter un Produit"
+    document.getElementById("confimer").addEventListener("click", function () {
+    document.getElementById("popup2").style.display = "none";
+    document.querySelector(".content").style.display = "block";
+    document.querySelector(".popup").style.display = "none";
+    document.querySelector(".popup1").style.display = "none";
+});
+
+// Fermer le popup lorsqu'on clique sur le bouton de fermeture
+document.getElementById("close-popup").addEventListener("click", function () {
+    document.getElementById("popup").style.display = "none";
+});
+
+// Fermer le popup lorsque l'utilisateur clique en dehors du contenu du popup
+window.onclick = function (event) {
+    var popup2 = document.getElementById("popup2");
+    if (event.target == popup1) {
+        popup.style.display = "none";
+    }
+}
+
+     </script>
+  </body>
+</html>

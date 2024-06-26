@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Récuperation mot de passe</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='connexion.css') }}">
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+  </head>
+  <body>
+    <div class="bg-img" style="background-image: url({{ url_for('static', filename='image/logo1.jpg') }});
+        height: 100vh;
+        background-size: cover;
+        background-position: center;">
+      <div class="content">
+        <header>Récuperation de mot de passe</header>
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+              {% for message in messages %}
+                  <div class="alert">{{ message }}</div>
+              {% endfor %}
+          {% endif %}
+        {% endwith %}
+        <form action="/forgot_password" method="POST">
+            <div class="pass">
+                <p class="pass">Entrez votre adresse Email</p>
+          </div>
+          <div class="field">
+            <i class="fas fa-user"></i>
+            <input type="email"  placeholder="Email" name="email">
+          </div><br>
+          <div class="field">
+            <input type="submit" value="Confirmer">
+          </div><br>
+            <div class="field1"><a class="field1" href="{{url_for('login')}}">Retour</a></div>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

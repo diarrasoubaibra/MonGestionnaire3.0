@@ -1,0 +1,40 @@
+<div class="sidebar">
+  <div class="logo-details" style="background-image: url({{ url_for('static', filename='image/logo.jpg') }});
+hheight: 100vh;
+  background-size: contain;
+  background-position: center;">
+    <span class="logo_name">DL SION COMPAGNIE</span>
+  </div>
+  <ul class="nav-links">
+    <li>
+      <a href="{{ url_for('dashboard_vendeur') }}" class="active">
+        <i class="bx bx-grid-alt"></i>
+        <span class="links_name">Tableau de bord</span>
+      </a>
+    </li>
+    <li>
+      <a href="{{ url_for('vendeur_client') }}">
+        <i class="bx bx-user"></i>
+        <span class="links_name">clients</span>
+      </a>
+    </li>
+    <li>
+      <a href="{{ url_for('vendeur_ventes') }}">
+        <i class="bx bxs-cart-add cart two"></i>
+        <span class="links_name">Ventes</span>
+      </a>
+    </li>
+    <li>
+      <a href="{{ url_for('vendeur_commande') }}">
+        <i class="bx bx-cart-alt cart"></i>
+        <span class="links_name">Commandes</span>
+      </a>
+    </li>
+    <li class="log_out">
+      <a href="{{url_for('userLogout')}}">
+        <i class="bx bx-log-out"></i>
+        <span class="links_name">Déconnexion</span>
+      </a>
+    </li>
+  </ul>
+</div>

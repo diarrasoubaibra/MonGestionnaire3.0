@@ -1,0 +1,44 @@
+{% extends "membres/gestionnaire/base_gestion.html"%}
+{% block centre%}
+<div class="home-content">
+  <div class="sales-boxes">
+    <div class="recent-sales2 box">
+      <div class="formulaire">
+       <h2>Modification produit</h2><br>
+
+            <form method="post" action="{{ url_for('gestion_modifier_produit', id=resultat[0])}}" enctype="multipart/form-data">
+
+              <label for="nom">Nom du produit</label>
+              <input type="text" id="nom" name="nom" value="{{resultat[1]}}" required>
+
+              <label for="categorie">Categorie</label>
+              <input type="text" id="categorie" name="categorie" value="{{resultat[2]}}" required>
+
+              <label for="prix">Prix d'achat</label>
+              <input type="number" id="prix" name="prix" value="{{resultat[3]}}" required>
+
+              <label for="nombre">Ajouter un stock minimum</label>
+              <input type="number" id="nombre" name="nombre" value="{{resultat[5]}}" required>
+
+              <label for="description">Désignation</label>
+              <textarea id="description" name="description" required>{{resultat[6]}}</textarea>
+
+              <label for="image">Image</label>
+              <input type="file" id="image" name="image" accept="image/*" required>
+
+                <!-- Affichage de l'image existante -->
+              {% if resultat[7] %}
+                  <img src="{{ url_for('static', filename='image/upload/' + image_actuel) }}" alt="Image actuelle" style="max-width: 300px; max-height: 70px;border-radius: 25px;position: absolute;bottom:190px;right:370px;">
+              {% endif %}
+
+              <div><button type="#" ><a href="{{url_for('gestion_produit')}}" style="text-decoration:none;
+    color: #fff;">Annuler</a></button>
+
+                <button type="submit" >Confirmer</button>
+                </div>
+            </form>
+        </div>
+  </div><br>
+</div>
+  </div>
+{% endblock %}

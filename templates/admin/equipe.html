@@ -1,0 +1,128 @@
+{% extends "base.html"%}
+{% block centre%}
+<div class="home-content">
+
+        <div class="sales-boxes">
+          <div class="recent-sales1 box">
+            <div class="title">Profil</div>
+            <p>Tableau de bord / Profil</p><br>
+            <div class="sales-details1">
+              <div class="profil" style="background-image: url({{ url_for('static', filename='image/profile.jpg') }});"></div>
+              <div class="infos">
+                  <h3>David YAO</h3><br>
+                  <p>Responsable</p><br>
+                  <p> Florida, United State</p><br>
+                  <p>Tel : 777777777, Email : dlsioncompagnie@.com, DL SION COMPAGNY, ABIDJAN</p>
+              </div>
+              <div class="message">
+                  <button>Message</button>
+                  <button id=modifier>Modifier</button>
+              </div>
+                 <button id="open-popup1">Modifier mes acces</button>
+            </div><br>
+              <div class="sales-details2">
+              <div class="message">
+                  <a href="{{ url_for('profil') }}"><button>A propos de moi</button></a>
+                  <button>Mot de passe</button>
+                  <a href="{{ url_for('equipe') }}"><button>Mon équipe</button></a>
+              </div>
+            </div>
+          </div>
+        </div><br>
+
+<div class="sales-boxes">
+          <div class="recent-sales box">
+              <div class="title">
+              <p>Liste du personnel</p><button id="open-popup">Ajouter un membre</button>
+            </div>
+            <div class="sales-details">
+              <ul class="details">
+                <li class="topic">Nom</li>
+                <li><a href="#"></a></li>
+                <li><a href="#">Soum</a></li>
+              </ul>
+              <ul class="details">
+                <li class="topic">Prénom</li>
+                <li><a href="#"> Aboub</a></li>
+              </ul>
+              <ul class="details">
+                <li class="topic">Poste</li>
+                <li><a href="#">Vendeur</a></li>
+              </ul>
+                <ul class="details">
+                    <li class="topic">Login</li>
+                    <li><a href="#">dlsioncompagnie</a></li>
+                </ul>
+                <ul class="details">
+                <li class="topic">Mot de pass</li>
+                <li><a href="#">**************</a></li>
+              </ul>
+              <ul class="details">
+                <li class="topic">Téléphone</li>
+                <li><a href="#">070707070</a></li>
+              </ul>
+                <ul class="details">
+                <li class="topic">Email</li>
+                <li><a href="#">dlsion@gmail.com</a></li>
+              </ul>
+              <ul class="details">
+                <li class="topic">Action</li>
+                <div class="icon">
+                  <i class='bx bx-edit edit-icon' style='font-size: 30px; color: blue;'></i>
+                  <i class='bx bx-trash delete-icon' style='font-size: 30px; color: red;'></i>
+                </div>
+              </ul>
+            </div>
+            <div class="button">
+              <a href="#">Voir plus</a>
+            </div>
+          </div>
+        </div>
+
+      </div><br>
+
+<div id="popup" class="popup">
+    <div class="popup-content">
+        <span class="close" id="close-popup">&times;</span>
+      <h2>Ajout d'un nouveau membre</h2><br>
+        <form>
+             <label for="nom">Nom</label>
+              <input type="text" id="nom" name="nom" required>
+
+            <label for="prenom">Prénom</label>
+              <input type="text" id="prenom" name="prenom" required>
+
+              <label for="categorie">Poste</label>
+                <select id="categorie" name="categorie" required>
+                    <option value="">Sélectionnez un poste</option>
+                    <option value="categorie1">Responsable</option>
+                    <option value="categorie2">Gestionnaire</option>
+                    <option value="categorie3">Vendeur</option>
+                    <!-- Ajoutez d'autres options selon vos besoins -->
+                </select>
+              <label for="tel">Téléphone</label>
+              <input type="tel" id="tel" name="tel" required>
+
+             <label for="email">Email</label>
+              <input type="email" id="email" name="email" required>
+
+            <label for="login">Login</label>
+              <input type="text" id="login" name="login" required>
+
+            <label for="motpass">Mot de pass</label>
+              <input type="password" id="motpass" name="motpass" required>
+
+            <label for="confmotpass">Confirmez le mot de pass</label>
+              <input type="password" id="confmotpass" name="confmotpass" required>
+
+              <label for="image">Photo</label>
+              <input type="file" id="image" name="image" accept="image/*" required>
+
+              <button type="submit">Ajouter</button>
+        </form>
+    </div>
+</div>
+
+
+
+{% endblock %}

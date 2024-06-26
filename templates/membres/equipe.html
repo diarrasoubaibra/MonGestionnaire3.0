@@ -1,0 +1,229 @@
+{% extends "base.html"%}
+{% block centre%}
+<div class="home-content">
+  <div class="sales-boxes">
+    <div class="recent-sales box">
+      <div class="title">
+        <p>Liste du personnel</p>
+              {% with messages = get_flashed_messages() %}
+                  {% if messages %}
+                    {% for message in messages %}
+                      <p class="alert" style="color:green;">{{ message }}</p><br>
+                    {% endfor %}
+                  {% endif %}
+                {% endwith %}
+        <button id="open-popup">Ajouter un membre</button>
+      </div>
+      
+      <div class="sales-details">
+        
+            <ul class="details" id="details-nom">
+              <li class="topic">Nom</li>
+              {% for row in utilisateurs %}
+              <li><a href="#">{{ row[1] }}</a></li>
+              {% endfor %}
+            </ul>
+            <ul class="details" id="details-prenom">
+              <li class="topic">Prénom</li>
+              {% for row in utilisateurs %}
+              <li><a href="#">{{ row[2] }}</a></li>
+              {% endfor %}
+            </ul>
+            <ul class="details" id="details-poste">
+              <li class="topic">Poste</li>
+              {% for utilisateur in utilisateurs %}
+              <li><a href="#">{{ utilisateur[3] }}</a></li>
+              {% endfor %}
+            </ul>
+            <ul class="details" id="details-login">
+              <li class="topic">Login</li>
+              {% for row in utilisateurs %}
+              <li><a href="#">{{ row[6] }}</a></li>
+              {% endfor %}
+            </ul>
+            <ul class="details" id="details-mot">
+                <li class="topic">Mot de passe</li>
+                {% for row in utilisateurs %}
+                <li>
+                    <a href="#" id="password-text-{{ row[0] }}" class="password-text">{{ row[9] }}</a>
+                    <i class='bx bx-show eyes-icon' id="toggle-password-{{ row[0] }}" style='font-size: 22px; color:blue;'></i>
+                </li>
+                {% endfor %}
+            </ul>
+            <ul class="details" id="details-telephone">
+              <li class="topic">Téléphone</li>
+              {% for row in utilisateurs %}
+              <li><a href="#">{{ row[4] }}</a></li>
+              {% endfor %}
+            </ul>
+            <ul class="details" id="details-email">
+              <li class="topic">Email</li>
+              {% for row in utilisateurs %}
+              <li><a href="#">{{ row[5] }}</a></li>
+              {% endfor %}
+            </ul>
+            <ul class="details" id="details-action">
+              <li class="topic">Action</li>
+              {% for row in utilisateurs %}
+               <li>
+              <div class="icon">
+                <a href="{{url_for('modifier_membre', id_utilisateur=row[0])}}"><i class='bx bx-edit edit-icon' style='font-size: 23px; color: blue;'></i></a>
+                <i class='bx bx-trash delete-icon' style='font-size: 23px; color: red;'></i>
+              </div>
+               </li>
+              {% endfor %}
+            </ul>
+      </div>
+      <div class="button">
+        <a href="#" id="precedent">Précédent</a>
+        <a href="#" id="voir-plus">Voir plus</a>
+      </div>
+    </div>
+  </div><br>
+
+</div>
+
+<div id="popup" class="popup">
+  <div class="popup-content">
+    <span class="close" id="close-popup">&times;</span>
+    <h2>Ajout d'un nouveau membre</h2><br>
+    <form action="/admin/ajouter_membre" method="POST" enctype="multipart/form-data">
+
+      <label for="nom">Nom</label>
+      <input type="text" id="nom" name="nom" required>
+
+      <label for="prenom">Prénom</label>
+      <input type="text" id="prenom" name="prenom" required>
+
+      <label for="categorie">Poste</label>
+      <select id="categorie" name="poste" required>
+        <option value="">Sélectionnez un poste</option>
+        <option value="gestionnaire">Gestionnaire</option>
+        <option value="vendeur">Vendeur</option>
+        <!-- Ajoutez d'autres options selon vos besoins -->
+      </select>
+      <label for="tel">Téléphone</label>
+      <input type="tel" id="tel" name="tel" required>
+
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required>
+
+      <label for="login">Login</label>
+      <input type="text" id="login" name="login" required>
+
+      <label for="motpass">Mot de pass</label>
+      <input type="password" id="motpass" name="password" required>
+
+      <label for="confmotpass">Confirmez le mot de pass</label>
+      <input type="password" id="confmotpass" name="confmotpass" required>
+
+      <label for="image">Photo</label>
+      <input type="file" id="image" name="image" accept="image/*" required>
+
+      <button type="submit">Ajouter</button>
+    </form>
+  </div>
+</div>
+
+<div class="popup0" id="confirmationPopup">
+  <div class="confirmation-container">
+      <h2>Êtes-vous sûr de vouloir supprimer ce membre?</h2>
+      <form id="deleteForm" method="POST">
+          <button type="submit" class="btn-confirm">Confirmer</button>
+          <button type="button" class="btn-cancel" onclick="closePopup()">Annuler</button>
+      </form>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+      const deleteIcons = document.querySelectorAll('.delete-icon');
+      const popup = document.getElementById('confirmationPopup');
+      const deleteForm = document.getElementById('deleteForm');
+
+      deleteIcons.forEach(icon => {
+          icon.addEventListener('click', function() {
+              const id = this.getAttribute('data-id');
+              deleteForm.action = `/admin/supprimer_membre/${id}`;
+              popup.style.display = 'flex';
+          });
+      });
+  });
+
+  function closePopup() {
+      document.getElementById('confirmationPopup').style.display = 'none';
+  }
+</script>
+
+<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            {% for row in utilisateurs %}
+            (function(rowId) {
+                const passwordText = document.getElementById('password-text-' + rowId);
+                const togglePassword = document.getElementById('toggle-password-' + rowId);
+                let isPasswordVisible = false;
+
+                togglePassword.addEventListener('click', function() {
+                    if (isPasswordVisible) {
+                        passwordText.style.display = 'none';
+                        togglePassword.className = 'bx bx-show eyes-icon';
+                    } else {
+                        passwordText.style.display = 'inline';
+                        togglePassword.className = 'bx bx-hide eyes-icon';
+                    }
+                    isPasswordVisible = !isPasswordVisible;
+                });
+            })({{ row[0] }});
+            {% endfor %}
+        });
+    </script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const itemsPerPage = 7;
+    let currentPage = 1;
+
+    const detailsSections = [
+        document.getElementById('details-nom'),
+        document.getElementById('details-prenom'),
+        document.getElementById('details-poste'),
+        document.getElementById('details-login'),
+        document.getElementById('details-mot'),
+        document.getElementById('details-telephone'),
+        document.getElementById('details-action')
+    ];
+
+    function showPage(page) {
+        detailsSections.forEach(section => {
+            const items = section.querySelectorAll('li:not(.topic)');
+            items.forEach((item, index) => {
+                item.style.display = (index >= (page - 1) * itemsPerPage && index < page * itemsPerPage) ? '' : 'none';
+            });
+        });
+    }
+
+    document.getElementById('voir-plus').addEventListener('click', function(e) {
+        e.preventDefault();
+        const totalItems = detailsSections[0].querySelectorAll('li:not(.topic)').length;
+        const totalPages = Math.ceil(totalItems / itemsPerPage);
+        if (currentPage < totalPages) {
+            currentPage++;
+            showPage(currentPage);
+        }
+    });
+
+    document.getElementById('precedent').addEventListener('click', function(e) {
+        e.preventDefault();
+        if (currentPage > 1) {
+            currentPage--;
+            showPage(currentPage);
+        }
+    });
+
+    // Initialiser l'affichage de la première page
+    showPage(currentPage);
+});
+</script>
+
+
+{% endblock %}

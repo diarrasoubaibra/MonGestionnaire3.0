@@ -1,0 +1,870 @@
+{% extends "membres/vendeur/base_vendeur.html"%}
+{% block centre%}
+<div class="home-content">
+  <div class="overview-boxes">
+    <div class="box">
+      <div class="right-side">
+        <div class="box-topic">Ventes</div>
+        <div class="number">{{ventejour[0]}}</div>
+        <div class="indicator">
+          <i class="bx bx-up-arrow-alt"></i>
+          <span class="text">Aujourd'hui</span>
+        </div>
+      </div>
+      <i class="bx bx-cart-alt cart"></i>
+    </div>
+    <div class="box">
+      <div class="right-side">
+        <div class="box-topic">Total vente</div>
+        <div class="number">{{ventetotal[0]}}</div>
+        <div class="indicator">
+          <i class="bx bx-up-arrow-alt"></i>
+          <span class="text">cumulées</span>
+        </div>
+      </div>
+      <i class="bx bxs-cart-add cart two"></i>
+    </div>
+    <div class="box">
+      <div class="right-side">
+        <div class="box-topic">Montant</div>
+        <div class="number">{{montanttotal[0]}}</div>
+        <div class="indicator">
+          <i class="bx bx-down-arrow-alt down"></i>
+          <span class="text"></span>
+        </div>
+      </div>
+      <i class="bx bxs-cart-download cart four"></i>
+    </div>
+  </div>
+
+  <div class="sales-boxes">
+    <div class="recent-sales box">
+      <div class="title">
+        <p>Liste des ventes</p>
+          {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            {% for message in messages %}
+              <p class="alert" style="color:green;">{{ message }}</p><br>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+        <button id="open-popup">Ajouter une nouvelle vente</button>
+      </div>
+      <div class="sales-details">
+        <ul class="details" id="details-date">
+          <li class="topic">Date de la vente</li>
+          {% for row in resultat %}
+             <li><a href="#">{{ row[1] }}</a></li>
+          {% endfor %}
+        </ul>
+
+        <ul class="details" id="details-statut">
+          <li class="topic">Statut</li>
+          {% for row in resultat %}
+          <li>
+            <a href="#" >{{ row[4] }}</a>
+            <form action="/status_vente/{{ row[0] }}" method="POST" class="select-wrapper">
+              <select class="select" name="status" onchange="hideDropdownAndSubmit(this.form, '{{ row[2] }}')">
+                <option disabled selected>Choisissez un statut</option>
+                <option value="Vendu">Vendu</option>
+                <option value="Retourné">Retourné</option>
+                <option value="Annuler">Annuler</option>
+              </select>
+            </form>
+          </li>
+          {% endfor %}
+        </ul>
+        <ul class="details" id="details-produit">
+          <li class="topic">Produit</li>
+          {% for row in resultat %}
+          <li><a href="#">{{ row[3] }}</a></li>
+          {% endfor %}
+        </ul>
+
+        <ul class="details" id="details-details">
+          <li class="topic">details</li>
+          {% for row in resultat %}
+          <li><button class="gauche voir-btn1" data-id="{{ row[0] }}"><a href="#"><i class='bx bx-show eyes-icon' style='font-size: 22px; color:white;'></i></a></button></li>
+          {% endfor %}
+        </ul>
+
+        <ul class="details" id="details-client">
+          <li class="topic">Nom clients</li>
+          {% for row in resultat %}
+          <li><a href="#">{{ row[2] }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div class="button">
+        <div class="button">
+            <a href="#" id="precedent">Précédent</a>
+            <a href="#" id="voir-plus">Voir plus</a>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="popup121" class="popup121">
+        <div class="popup-content1">
+            <span class="close" id="close-popup11">&times;</span>
+          <p style="color: orange;">Cachet des mentions obligatoires <span class="black-text">FACTURE N°23007Z075</span><span class="orange-text">\0740935</span></p>
+            <div class="signe">
+                <div class="signature"></div>
+                <div class="clients"><p>Date : .................................................</p>
+                    <p>Client : ...................................................</p>
+                    <p>Adresse : .............................................</p>
+                </div>
+            </div>
+            <form>
+              <table>
+                        <thead>
+                            <tr>
+                                <td>Réf</td>
+                                <td>Designation</td>
+                                <td>Quantité</td>
+                                <td>PU TTC</td>
+                                <td>Montant TTC</td>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                        </tbody>
+                     <thead>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </thead>
+                    </table>
+                <div class="signe1">
+                <div class="signature1">Montant total TTC</div>
+                <div class="total1"></div>
+            </div>
+                <p style="color:orange;">Arreté de la presente facture à la somme de .........................................................</p>
+                 <p style="color:orange;">.....................................................................................................................................................................</p><br>
+                 <p style="color:orange; text-align:center;">Facturation de la TVA non autorisée</p>
+            </form>
+            <div><button class="btn12"><a href="{{url_for('vendeur_ventes')}}" style="text-decoration:none;
+    color: #fff;">Retour</a></button>
+                <button id="btn111" onclick="printSection('popup121')">Imprimer</button>
+            </div><br>
+        </div>
+</div>
+
+<div id="popup" class="popup">
+  <div class="popup-content">
+    <span class="close" id="close-popup">&times;</span>
+    <h2>Ajout d'une nouvelle vente</h2><br>
+    <div><button id="btn1">Client existant</button>
+      <button id="btn2">Nouveau client</button>
+    </div><br>
+    <form class="form1" id="form1 stock-form" method="post" action="{{url_for('ventes')}}">
+    <label for="client">Client</label>
+    <select id="client" name="client" required style="width:60%;">
+        <option value="" disabled selected>Sélectionnez le client</option>
+        {% for client in clients %}
+        <option value="{{ client[0] }}">{{ client[1] }}</option>
+        {% endfor %}
+    </select><br>
+
+    <label for="produit">Produit</label>
+    <select id="produit" name="produit" required>
+        <option value="" disabled selected>Sélectionnez un produit</option>
+        {% for produit in produits %}
+        <option value="{{ produit[0] }}">{{ produit[1] }}</option>
+        {% endfor %}
+    </select>
+    <label for="nombre">Nombre</label>
+    <input type="number" id="nombre" name="nombre" required>
+    <label for="prix_vente">Entrez le prix unitaire de vente</label>
+    <input type="number" id="prix_vente" name="prix_vente" required>
+
+    <button type="button" id="add-button">Ajouter</button>
+
+    <table id="ventes-table">
+        <thead>
+            <tr>
+                <td>Réf</td>
+                <td>Désignation</td>
+                <td>Quantité</td>
+                <td>PU TTC</td>
+                <td>Montant TTC</td>
+                <td>ID Client</td>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+    <div>Total: <span class="total">0</span></div>
+    <button type="submit" id="submit-button">Valider la vente</button>
+</form>
+
+    <form class="form2" id="form2" method="post" action="{{url_for('ventes')}}">
+  <label for="nom">Nom et prénoms</label>
+  <input type="text" id="nom" name="nom" required>
+
+  <label for="tel">Téléphone</label>
+  <input type="tel" id="tel" name="tel" required>
+
+  <label for="email">Email</label>
+  <input type="email" id="email" name="email" required>
+
+  <label for="adresse">Adresse</label>
+  <input type="text" id="adresse" name="adresse" required>
+    <label for="statut">Choisissez un statut pour ce client</label>
+    <select id="statut" name="statut" required>
+        <option value="" disabled selected>Sélectionnez un statut</option>
+        <option >Client</option>
+        <option >Niche</option>
+        <option >Prospect</option>
+        <option >VIP</option>
+        <option >Ambassadeur</option>
+        <!-- Ajoutez d'autres options selon vos besoins -->
+    </select><br>
+
+    <label for="produit">Produit</label>
+    <select id="produit1" name="produit" required>
+        <option value="" disabled selected>Sélectionnez un produit</option>
+        {% for produit in produits %}
+        <option value="{{ produit[0] }}">{{ produit[1] }}</option>
+        {% endfor %}
+    </select>
+    <label for="nombre1">Nombre</label>
+    <input type="number" id="nombre1" name="nombre" required>
+    <label for="prix_vente1">Entrez le prix unitaire de vente</label>
+    <input type="number" id="prix_vente1" name="prix_vente" required>
+
+    <button type="button" id="add-button1">Ajouter</button>
+
+    <table id="ventes-table1">
+        <thead>
+            <tr>
+                <td>Réf</td>
+                <td>Désignation</td>
+                <td>Quantité</td>
+                <td>PU TTC</td>
+                <td>Montant TTC</td>
+                <td>ID Client</td>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+    <div>Total: <span class="total1">0</span></div>
+    <button type="submit" id="submit-button1">Valider la vente</button>
+  </form><br>
+
+  </div>
+</div>
+
+<div id="popup12" class="popup12">
+        <div class="popup-content1">
+            <span class="close" id="close-popup1">&times;</span>
+          <p style="color: orange;">Cachet des mentions obligatoires <span class="black-text">FACTURE N°23007Z075</span><span class="orange-text">\0740935</span></p>
+            <div class="signe">
+                <div class="signature"></div>
+                <div class="clients"><p>Date : .................................................</p>
+                    <p>Client : ...................................................</p>
+                    <p>Adresse : .............................................</p>
+                </div>
+            </div>
+            <form>
+              <table id="stock-table1">
+                        <thead>
+                            <tr>
+                                <td>Réf</td>
+                                <td>Designation</td>
+                                <td>Quantité</td>
+                                <td>PU TTC</td>
+                                <td>Montant TTC</td>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                        </tbody>
+                     <thead>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </thead>
+                    </table>
+                <div class="signe1">
+                <div class="signature1">Montant total TTC</div>
+                <div class="total2"></div>
+            </div>
+                <p style="color:orange;">Arreté de la presente facture à la somme de .........................................................</p>
+                 <p style="color:orange;">.....................................................................................................................................................................</p><br>
+                 <p style="color:orange; text-align:center;">Facturation de la TVA non autorisée</p>
+            </form>
+            <div><button class="btn12"><a href="{{url_for('vendeur_ventes')}}" style="text-decoration:none;
+    color: #fff;">Retour</a></button>
+                <button id="btn11" onclick="printSection('popup12')">Imprimer</button>
+            </div><br>
+        </div>
+</div>
+
+<div class="popup0" id="confirmationPopup">
+        <div class="confirmation-container">
+            <h2>Êtes-vous sûr de vouloir supprimer cette vente ?</h2>
+            <form id="deleteForm" method="POST">
+                <button type="submit" class="btn-confirm">Confirmer</button>
+                <button type="button" class="btn-cancel" onclick="closePopup()">Annuler</button>
+            </form>
+        </div>
+</div>
+
+
+  <script>
+document.addEventListener('DOMContentLoaded', function() {
+    var addButton = document.querySelector('#add-button');
+    var addButton1 = document.querySelector('#add-button1');
+    var ventTable = document.querySelector('#ventes-table tbody');
+    var ventTable1 = document.querySelector('#ventes-table1 tbody');
+    var stockTable1 = document.querySelector('#stock-table1 tbody');
+    var submitButton = document.querySelector('#submit-button');
+    var submitButton1 = document.querySelector('#submit-button1');
+    var rowNum = 1;
+
+    var notificationIcon = document.getElementById("notificationIcon");
+    var notificationPopup = document.getElementById("notificationPopup");
+    var notificationCount = document.getElementById("notificationCount");
+    var notificationList = document.getElementById("notificationList");
+
+    var count = 0;
+
+    // Charger les notifications depuis localStorage
+    function loadNotifications() {
+        const notifications = JSON.parse(localStorage.getItem('notifications')) || [];
+        notifications.forEach(notification => addNotification(notification, false));
+    }
+
+    // Enregistrer les notifications dans localStorage
+    function saveNotifications() {
+        const notifications = [];
+        notificationList.querySelectorAll('li').forEach(notificationItem => {
+            const notificationDetails = {
+                date: notificationItem.querySelector('.notification-date').textContent,
+                produit: notificationItem.querySelector('.notification-produit').textContent,
+                client: notificationItem.querySelector('.notification-client').textContent,
+                quantite: notificationItem.querySelector('.notification-quantite').textContent
+            };
+            notifications.push(notificationDetails);
+        });
+        localStorage.setItem('notifications', JSON.stringify(notifications));
+    }
+
+    notificationIcon.addEventListener("click", function() {
+        notificationPopup.classList.toggle("show");
+    });
+
+    window.addEventListener("click", function(event) {
+        if (!notificationPopup.contains(event.target) && !notificationIcon.contains(event.target)) {
+            notificationPopup.classList.remove("show");
+        }
+    });
+
+    function addNotification(notificationDetails, save = true) {
+        count++;
+        notificationCount.textContent = count;
+
+        const notificationItem = document.createElement("li");
+        notificationItem.innerHTML = `
+            <div class="notification-details">
+                <div class="notification-date">Date: ${notificationDetails.date}</div>
+                <div class="notification-produit">Produit: ${notificationDetails.produit}</div>
+                <div class="notification-client">Client: ${notificationDetails.client}</div>
+                <div class="notification-quantite">Quantité: ${notificationDetails.quantite}</div>
+            </div>
+            <button class="mark-as-read">Lu</button>
+        `;
+
+        // Ajouter la notification en haut de la liste
+        notificationList.insertBefore(notificationItem, notificationList.firstChild);
+
+        notificationItem.querySelector(".mark-as-read").addEventListener("click", function() {
+            notificationList.removeChild(notificationItem);
+            count--;
+            notificationCount.textContent = count;
+            saveNotifications();
+        });
+
+        if (save) {
+            saveNotifications();
+        }
+    }
+
+    loadNotifications();
+
+    function addRowToTable(produitId, data, nombre, prixVente, id_client, table, stockTable) {
+        var montantTTC = nombre * prixVente;
+
+        var newRow = document.createElement('tr');
+        newRow.innerHTML = `<td>${produitId}</td>
+                            <td>${data.designation}</td>
+                            <td>${nombre}</td>
+                            <td>${prixVente}</td>
+                            <td>${montantTTC}</td>
+                            <td>${id_client || ''}</td>
+                            <td><span class="delete-icon">&times;</span></td>`;
+
+        var newRow1 = document.createElement('tr');
+        newRow1.innerHTML = `<td>${rowNum}</td>
+                             <td>${data.designation}</td>
+                             <td>${nombre}</td>
+                             <td>${prixVente}</td>
+                             <td>${montantTTC}</td>`;
+
+        table.appendChild(newRow);
+        stockTable.appendChild(newRow1);
+
+        newRow.querySelector('.delete-icon').addEventListener('click', function() {
+            table.removeChild(newRow);
+            stockTable.removeChild(newRow1);
+            updateTotal();
+        });
+
+        rowNum++;
+        updateTotal();
+    }
+
+    addButton.addEventListener('click', function(event) {
+        event.preventDefault();
+
+        var produitId = document.querySelector('#produit').value;
+        var nombre = parseInt(document.querySelector('#nombre').value, 10);
+        var id_client = document.querySelector('#client').value;
+        var prixVente = parseFloat(document.querySelector('#prix_vente').value);
+
+        fetch('/get_product_infos/' + produitId)
+            .then(response => response.json())
+            .then(data => {
+                if (nombre > data.stock) {
+                    alert('Quantité demandée excède le stock disponible. Ajout impossible.');
+                    return;
+                }
+                addRowToTable(produitId, data, nombre, prixVente, id_client, ventTable, stockTable1);
+            })
+            .catch(error => {
+                console.error('Erreur lors de la récupération des informations du produit :', error);
+            });
+    });
+
+    addButton1.addEventListener('click', function(event) {
+        event.preventDefault();
+
+        var produitId = document.querySelector('#produit1').value;
+        var nombre = parseInt(document.querySelector('#nombre1').value, 10);
+        var prixVente = parseFloat(document.querySelector('#prix_vente1').value);
+
+        fetch('/get_product_infos/' + produitId)
+            .then(response => response.json())
+            .then(data => {
+                if (nombre > data.stock) {
+                    alert('Quantité demandée excède le stock disponible. Ajout impossible.');
+                    return;
+                }
+                addRowToTable(produitId, data, nombre, prixVente, null, ventTable1, stockTable1);
+            })
+            .catch(error => {
+                console.error('Erreur lors de la récupération des informations du produit :', error);
+            });
+    });
+
+    function updateTotal() {
+        var total = 0;
+        var total1 = 0;
+        var stocktotal = 0;
+        var rows0 = stockTable1.querySelectorAll('tr');
+        var rows = ventTable.querySelectorAll('tr');
+        var rows1 = ventTable1.querySelectorAll('tr');
+
+        rows0.forEach(row => {
+            var cellValue = row.querySelectorAll('td')[4].textContent;
+            stocktotal += parseFloat(cellValue);
+        });
+
+        rows.forEach(row => {
+            var cellValue = row.querySelectorAll('td')[4].textContent;
+            total += parseFloat(cellValue);
+        });
+
+        rows1.forEach(row => {
+            var cellValue = row.querySelectorAll('td')[4].textContent;
+            total1 += parseFloat(cellValue);
+        });
+        document.querySelector('.total2').textContent = stocktotal;
+        document.querySelector('.total').textContent = total;
+        document.querySelector('.total1').textContent = total1;
+    }
+
+    function getOrderData(table) {
+        var orderData = [];
+        table.querySelectorAll('tr').forEach(row => {
+            var rowData = {
+                produit_id: parseInt(row.cells[0].textContent),
+                nombre: parseInt(row.cells[2].textContent),
+                prix_vente: parseFloat(row.cells[3].textContent),
+                montant: parseFloat(row.cells[4].textContent),
+                id_client: parseInt(row.cells[5]?.textContent) || null,
+            };
+            orderData.push(rowData);
+        });
+        return orderData;
+    }
+
+    submitButton.addEventListener('click', function(event) {
+        event.preventDefault();
+
+        var orderData = getOrderData(ventTable);
+
+        fetch('/submit_vente', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(orderData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Vente soumise avec succès:', data);
+            ventTable.innerHTML = '';
+            updateTotal();
+            alert('Vente soumise avec succès!');
+
+            // Ajouter la notification
+            addNotification({
+                date: new Date().toLocaleString(),
+                produit: orderData[0].produit_id,
+                client: orderData[0].id_client,
+                quantite: orderData.reduce((sum, item) => sum + item.nombre, 0)
+            });
+
+            document.querySelector(".popup12").style.display = "block";
+        })
+        .catch(error => {
+            console.error('Erreur lors de la soumission de la vente:', error);
+            alert('Erreur lors de la soumission de la vente.');
+        });
+    });
+
+    submitButton1.addEventListener('click', function(event) {
+        event.preventDefault();
+
+        var orderData = getOrderData(ventTable1);
+
+        var newClientData = {
+            client: {
+                nom: document.querySelector('#nom').value,
+                tel: document.querySelector('#tel').value,
+                email: document.querySelector('#email').value,
+                adresse: document.querySelector('#adresse').value,
+                statut: document.querySelector('#statut').value,
+            },
+            order: orderData
+        };
+
+        console.log('Données envoyées:', newClientData);
+
+        fetch('/submit_new_client_vente', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newClientData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Vente pour le nouveau client soumise avec succès:', data);
+            ventTable1.innerHTML = '';
+            updateTotal();
+            alert('Vente pour le nouveau client soumise avec succès!');
+
+            // Ajouter la notification
+            addNotification({
+                date: new Date().toLocaleString(),
+                produit: orderData[0].produit_id,
+                client: newClientData.client.nom,
+                quantite: orderData.reduce((sum, item) => sum + item.nombre, 0)
+            });
+
+            document.querySelector(".popup12").style.display = "block";
+        })
+        .catch(error => {
+            console.error('Erreur lors de la soumission de la vente pour le nouveau client:', error);
+            alert('Erreur lors de la soumission de la vente pour le nouveau client.');
+        });
+    });
+});
+
+</script>
+
+<script>
+function printSection(sectionId) {
+    var printContents = document.getElementById(sectionId).innerHTML;
+    var originalContents = document.body.innerHTML;
+
+    document.body.innerHTML = printContents;
+
+    window.print();
+
+    document.body.innerHTML = originalContents;
+}
+</script>
+
+<script>
+    // Fonction pour afficher ou masquer la liste déroulante
+function toggleDropdown(link, color) {
+    var select = link.nextElementSibling.querySelector('.select');
+    select.classList.toggle('active');
+    link.style.color = getColor(color); // Mettre à jour la couleur du texte
+
+}
+
+// Fonction pour masquer la liste déroulante et soumettre le formulaire
+function hideDropdownAndSubmit(form, color) {
+    var select = form.querySelector('.select');
+    select.classList.remove('active'); // Masquer la liste déroulante
+    form.submit(); // Soumettre le formulaire
+    link.style.color = getColor(color); // Mettre à jour la couleur du texte
+}
+
+// Fonction pour obtenir la couleur en fonction du statut sélectionné
+function getColor(status) {
+    switch (status) {
+        case 'Vendu':
+            return 'green'; // Vert
+        case 'Retourné':
+            return 'blue'; // Bleu
+        case 'Annuler':
+            return 'red'; // Rouge
+        default:
+            return 'black'; // Noir par défaut
+    }
+}
+</script>
+
+<script>
+    // Sélectionnez tous les boutons "Voir"
+    var voirButtons = document.querySelectorAll(".voir-btn1");
+
+    // Ajoutez un écouteur d'événements à chaque bouton "Voir"
+    voirButtons.forEach(function(button) {
+        button.addEventListener("click", function() {
+            var rowId = button.getAttribute("data-id");
+            var popup = document.querySelector(".popup121");
+            var rowNum = 1;
+
+            // Faire une requête AJAX pour récupérer les données associées à cette ligne
+            fetch('/donnee_vente/' + rowId)
+                .then(response => response.json())
+                .then(data => {
+                    // Afficher les données dans le popup
+                    // Exemple : mettre les données dans les cellules du tableau dans le popup
+                    var tbody = popup.querySelector('tbody');
+                    tbody.innerHTML = ''; // Effacer le contenu précédent
+
+                    data.forEach(function(item) {
+                        var tr = document.createElement('tr');
+                        tr.innerHTML = '<td>' + item.date_commande + '</td>' +
+                                       '<td>' + item.designation + '</td>' +
+                                       '<td>' + item.quantite + '</td>' +
+                                       '<td>' + item.prix_vente + '</td>' +
+                                       '<td>' + item.montant + '</td>';
+
+                        tbody.appendChild(tr);
+
+                        rowNum++;
+                    });
+
+                    // Afficher le popup
+                    popup.style.display = "block";
+                })
+                .catch(error => {
+                    console.error('Erreur lors de la récupération des données de la ligne:', error);
+                });
+        });
+    });
+</script>
+
+<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const deleteIcons = document.querySelectorAll('.delete-icon');
+            const popup = document.getElementById('confirmationPopup');
+            const deleteForm = document.getElementById('deleteForm');
+
+            deleteIcons.forEach(icon => {
+                icon.addEventListener('click', function() {
+                    const id = this.getAttribute('data-id');
+                    deleteForm.action = `/supprimer_vente/${id}`;
+                    popup.style.display = 'flex';
+                });
+            });
+        });
+
+        function closePopup() {
+            document.getElementById('confirmationPopup').style.display = 'none';
+        }
+</script>
+
+<script>
+        document.getElementById('form2').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const formData = new FormData(this);
+            const orderData = {};
+            formData.forEach((value, key) => {
+                orderData[key] = value;
+            });
+
+            fetch('/vente_clients', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(orderData) // Convert order data to JSON
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Handle successful submission response
+                console.log('Client enregistré avec succès:', data);
+
+                // Clear the form
+                document.getElementById('form2').reset();
+
+                setTimeout(() => {
+                    location.reload();
+                }, 3000); // 2-second delay before the page refresh
+
+                // Display a success message to the user
+                document.getElementById('response-message').innerHTML = '<p style="color:green;">' + data.message + '</p>';
+            })
+            .catch(error => {
+                // Handle submission error
+                console.error('Erreur lors de la soumission du formulaire:', error);
+
+                // Display an error message to the user
+                document.getElementById('response-message').innerHTML = '<p style="color:red;">Erreur lors de la soumission du formulaire.</p>';
+            });
+        });
+    </script>
+
+<script>
+    $(document).ready(function() {
+      $('#client').select2({
+        placeholder: "Sélectionnez le client",
+        allowClear: true
+      });
+    });
+  </script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const articlesParPage = 7;
+    let pageActuelle = 1;
+
+    const sectionsDetails = [
+        document.getElementById('details-date'),
+        document.getElementById('details-statut'),
+        document.getElementById('details-produit'),
+        document.getElementById('details-details'),
+        document.getElementById('details-client')
+    ];
+
+    function afficherPage(page) {
+        sectionsDetails.forEach(section => {
+            const articles = section.querySelectorAll('li:not(.topic)');
+            articles.forEach((article, index) => {
+                article.style.display = (index >= (page - 1) * articlesParPage && index < page * articlesParPage) ? '' : 'none';
+            });
+        });
+    }
+
+    document.getElementById('voir-plus').addEventListener('click', function(e) {
+        e.preventDefault();
+        const totalArticles = sectionsDetails[0].querySelectorAll('li:not(.topic)').length;
+        const totalPages = Math.ceil(totalArticles / articlesParPage);
+        if (pageActuelle < totalPages) {
+            pageActuelle++;
+            afficherPage(pageActuelle);
+        }
+    });
+
+    document.getElementById('precedent').addEventListener('click', function(e) {
+        e.preventDefault();
+        if (pageActuelle > 1) {
+            pageActuelle--;
+            afficherPage(pageActuelle);
+        }
+    });
+
+    // Initialiser l'affichage de la première page
+    afficherPage(pageActuelle);
+});
+</script>
+
+{% endblock %}

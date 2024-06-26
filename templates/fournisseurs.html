@@ -1,0 +1,177 @@
+{% extends "base.html"%}
+{% block centre%}
+<div class="home-content">
+
+  <div class="sales-boxes">
+    <div class="recent-sales box">
+      <div class="title">
+        <p>Liste des fournisseur</p>
+                   {% with messages = get_flashed_messages() %}
+                  {% if messages %}
+                    {% for message in messages %}
+                      <p class="alert" style="color:green;font-size:20px;">{{ message }}</p><br>
+                    {% endfor %}
+                  {% endif %}
+                {% endwith %}
+        <button id="open-popup">Ajouter fournisseur</button>
+      </div>
+      <div class="sales-details">
+
+        <ul class="details" id="details-ref">
+          <li class="topic">ref</li>
+          {% for row in resultat %}
+          <li><a href="#">{{row[0]}}</a></li>
+          {% endfor %}
+        </ul>
+
+
+        <ul class="details" id="details-client">
+          <li class="topic">Nom</li>
+          {% for row in resultat %}
+          <li><a href="#">{{row[1]}}</a></li>
+          {% endfor %}
+        </ul>
+        <ul class="details" id="details-telephone">
+          <li class="topic">Téléphone</li>
+          {% for row in resultat %}
+          <li><a href="#">{{row[2]}}</a></li>
+          {% endfor %}
+        </ul>
+        <ul class="details" id="details-email">
+          <li class="topic">Email</li>
+          {% for row in resultat %}
+          <li><a href="#">{{row[3]}}</a></li>
+          {% endfor %}
+        </ul>
+        <ul class="details" id="details-adresse">
+          <li class="topic">Adresse</li>
+          {% for row in resultat %}
+          <li><a href="#">{{row[4]}}</a></li>
+          {% endfor %}
+        </ul>
+        <ul class="details" id="details-action">
+          <li class="topic">Action</li>
+          {% for row in resultat %}
+          <li>
+          <div class="icon">
+            <a href="{{ url_for('modifier_fournisseur', id=row[0]) }}"><i class='bx bx-edit edit-icon' style='font-size: 23px; color: blue;'></i></a>
+            <i class='bx bx-trash delete-icon' data-id="{{ row[0] }}" style='font-size: 23px; color: red;'></i>
+          </div>
+          </li>
+          {% endfor %}
+
+        </ul>
+      </div>
+      <div class="button">
+        <a href="#" id="precedent">Précédent</a>
+        <a href="#" id="voir-plus">Voir plus</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="popup" class="popup">
+  <div class="popup-content">
+    <span class="close" id="close-popup">&times;</span>
+    <h2>Ajout d'un nouveau Fournisseur</h2><br>
+
+    <form method="post" action="{{url_for('fournisseurs')}}">
+
+      <label for="nom">Nom et prénoms</label>
+      <input type="text" id="nom" name="nom" required>
+
+      <label for="tel">Téléphone</label>
+      <input type="text" id="tel" name="tel" required>
+
+
+      <!-- Ajoutez d'autres options selon vos besoins -->
+      </select>
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required>
+
+      <label for="adresse">Adresse</label>
+      <input type="text" id="adresse" name="adresse" required>
+
+      <button type="submit">Ajouter</button>
+    </form>
+  </div>
+</div>
+
+<div class="popup0" id="confirmationPopup">
+        <div class="confirmation-container">
+            <h2>Êtes-vous sûr de vouloir supprimer ce fournisseur ?</h2>
+            <form id="deleteForm" method="POST">
+                <button type="submit" class="btn-confirm">Confirmer</button>
+                <button type="button" class="btn-cancel" onclick="closePopup()">Annuler</button>
+            </form>
+        </div>
+</div>
+
+<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const deleteIcons = document.querySelectorAll('.delete-icon');
+            const popup = document.getElementById('confirmationPopup');
+            const deleteForm = document.getElementById('deleteForm');
+
+            deleteIcons.forEach(icon => {
+                icon.addEventListener('click', function() {
+                    const id = this.getAttribute('data-id');
+                    deleteForm.action = `/admin/supprimer_fournisseur/${id}`;
+                    popup.style.display = 'flex';
+                });
+            });
+        });
+
+        function closePopup() {
+            document.getElementById('confirmationPopup').style.display = 'none';
+        }
+    </script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const itemsPerPage = 7;
+    let currentPage = 1;
+
+    const detailsSections = [
+        document.getElementById('details-ref'),
+        document.getElementById('details-client'),
+        document.getElementById('details-telephone'),
+        document.getElementById('details-email'),
+        document.getElementById('details-adresse'),
+        document.getElementById('details-statut'),
+        document.getElementById('details-action')
+    ];
+
+    function showPage(page) {
+        detailsSections.forEach(section => {
+            const items = section.querySelectorAll('li:not(.topic)');
+            items.forEach((item, index) => {
+                item.style.display = (index >= (page - 1) * itemsPerPage && index < page * itemsPerPage) ? '' : 'none';
+            });
+        });
+    }
+
+    document.getElementById('voir-plus').addEventListener('click', function(e) {
+        e.preventDefault();
+        const totalItems = detailsSections[0].querySelectorAll('li:not(.topic)').length;
+        const totalPages = Math.ceil(totalItems / itemsPerPage);
+        if (currentPage < totalPages) {
+            currentPage++;
+            showPage(currentPage);
+        }
+    });
+
+    document.getElementById('precedent').addEventListener('click', function(e) {
+        e.preventDefault();
+        if (currentPage > 1) {
+            currentPage--;
+            showPage(currentPage);
+        }
+    });
+
+    // Initialiser l'affichage de la première page
+    showPage(currentPage);
+});
+</script>
+
+{% endblock %}

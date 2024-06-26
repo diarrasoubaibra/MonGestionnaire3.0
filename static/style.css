@@ -1,0 +1,1416 @@
+/* Googlefont Poppins CDN Link */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+.sidebar{
+  position: fixed;
+  height: 100%;
+  width: 240px;
+  background: #0A2558;
+  transition: all 0.5s ease;
+}
+.sidebar.active{
+  width: 60px;
+}
+.sidebar .logo-details{
+  height: 80px;
+  display: flex;
+  align-items: center;
+  flex-direction:column;
+  justify-content:end;
+  background:white;
+}
+
+.sidebar .logo-details .logo_name{
+  color: #fff;
+  font-size: 20px;
+  font-weight: 500;
+}
+.sidebar .nav-links{
+  margin-top: 10px;
+}
+.sidebar .nav-links li{
+  position: relative;
+  list-style: none;
+  height: 50px;
+}
+.sidebar .nav-links li a{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  transition: all 0.4s ease;
+}
+.sidebar .nav-links li a.active{
+  background: #081D45;
+}
+.sidebar .nav-links li a:hover{
+  background: #081D45;
+}
+.sidebar .nav-links li i{
+  min-width: 60px;
+  text-align: center;
+  font-size: 18px;
+  color: #fff;
+}
+.sidebar .nav-links li a .links_name{
+  color: #fff;
+  font-size: 15px;
+  font-weight: 400;
+  white-space: nowrap;
+}
+.sidebar .nav-links .log_out{
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+.home-section{
+  position: relative;
+  background: #f5f5f5;
+  background-image:url("{{ url_for('static', filename='image/logo1.jpg') }}");
+  min-height: 100vh;
+  width: calc(100% - 240px);
+  left: 240px;
+  transition: all 0.5s ease;
+}
+.sidebar.active ~ .home-section{
+  width: calc(100% - 60px);
+  left: 60px;
+}
+.home-section nav{
+  display: flex;
+  justify-content: space-between;
+  height: 80px;
+  background: rgba(255, 255, 255, 0.9); /* RGBA avec une opacité de 0.9 (90%) */
+  display: flex;
+  align-items: center;
+  position: fixed;
+  width: calc(100% - 240px);
+  left: 240px;
+  z-index: 100;
+  padding: 0 20px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+  transition: all 0.5s ease;
+}
+.sidebar.active ~ .home-section nav{
+  left: 60px;
+  width: calc(100% - 60px);
+}
+.home-section nav .sidebar-button{
+  display: flex;
+  align-items: center;
+  font-size: 20px;
+  font-weight: 500;
+}
+nav .sidebar-button i{
+  font-size: 35px;
+  margin-right: 10px;
+}
+.home-section nav .search-box{
+  position: relative;
+  height: 50px;
+  max-width: 550px;
+  width: 100%;
+  margin: 0 20px;
+}
+nav .search-box input{
+  height: 100%;
+  width: 100%;
+  outline: none;
+  background: #F5F6FA;
+  border: 2px solid #EFEEF1;
+  border-radius: 6px;
+  font-size: 18px;
+  padding: 0 15px;
+}
+nav .search-box .bx-search{
+  position: absolute;
+  height: 40px;
+  width: 40px;
+  background: #2697FF;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-radius: 4px;
+  line-height: 40px;
+  text-align: center;
+  color: #fff;
+  font-size: 22px;
+  transition: all 0.4 ease;
+}
+.home-section nav .profile-details{
+  display: flex;
+  align-items: center;
+  background: #F5F6FA;
+  border: 2px solid #EFEEF1;
+  border-radius: 6px;
+  height: 50px;
+  min-width: 190px;
+  padding: 0 15px 0 2px;
+}
+nav .profile-details img{
+  height: 40px;
+  width: 40px;
+  border-radius: 6px;
+  object-fit: cover;
+}
+nav .profile-details .admin_name{
+  font-size: 15px;
+  font-weight: 500;
+  color: #333;
+  margin: 0 10px;
+  white-space: nowrap;
+}
+nav .profile-details i{
+  font-size: 25px;
+  color: #333;
+}
+.home-section .home-content{
+  position: relative;
+  padding-top: 104px;
+}
+.home-content .overview-boxes{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 0 20px;
+  margin-bottom: 26px;
+}
+.overview-boxes .box{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(100% / 4 - 15px);
+  background: rgba(255, 255, 255, 0.9); /* RGBA avec une opacité de 0.9 (90%) */
+  padding: 15px 14px;
+  border-radius: 12px;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+}
+
+.overview-boxes .box1{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(100% / 2 - 15px);
+  background: rgba(255, 255, 255, 0.9); /* RGBA avec une opacité de 0.9 (90%) */
+  padding: 21px 20px;
+  border-radius: 12px;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+}
+
+
+.overview-boxes .box1 .right-side #categoriefiltre{
+  width:100%;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.9); /* RGBA avec une opacité de 0.9 (90%) */
+  font-size: 15px;
+  cursor:pointer;
+}
+
+.overview-boxes .box2{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(100% / 5 - 15px);
+  background: rgba(255, 255, 255, 0.9); /* RGBA avec une opacité de 0.9 (90%) */
+  padding: 21px 20px;
+  border-radius: 12px;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+  cursor:pointer;
+}
+
+/* Changer la couleur de fond au survol */
+.overview-boxes .box2:hover {
+  background: #3498db; /* Exemple de changement de couleur au survol */
+}
+
+.overview-boxes .box1 .right-side #categoriefiltre:focus{
+ border-color: #3498db; /* Changez la couleur de la bordure lorsque le textarea est en focus */
+ outline: none;
+}
+
+.overview-boxes .box-topic{
+  font-size: 20px;
+  font-weight: 500;
+}
+.home-content .box .number{
+  display: inline-block;
+  font-size: 35px;
+  margin-top: -6px;
+  font-weight: 500;
+}
+.home-content .box .indicator{
+  display: flex;
+  align-items: center;
+}
+.home-content .box .indicator i{
+  height: 20px;
+  width: 20px;
+  background: #8FDACB;
+  line-height: 20px;
+  text-align: center;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 20px;
+  margin-right: 5px;
+}
+.box .indicator i.down{
+  background: #e87d88;
+}
+.home-content .box .indicator .text{
+  font-size: 12px;
+}
+.home-content .box .cart{
+  display: inline-block;
+  font-size: 32px;
+  height: 50px;
+  width: 50px;
+  background: #cce5ff;
+  line-height: 50px;
+  text-align: center;
+  color: #66b0ff;
+  border-radius: 12px;
+  margin: -15px 0 0 6px;
+}
+.home-content .box .cart.two{
+   color: #2BD47D;
+   background: #C0F2D8;
+ }
+.home-content .box .cart.three{
+   color: #ffc233;
+   background: #ffe8b3;
+ }
+.home-content .box .cart.four{
+   color: #e05260;
+   background: #f7d4d7;
+ }
+.home-content .total-order{
+  font-size: 20px;
+  font-weight: 500;
+}
+.home-content .sales-boxes{
+  display: flex;
+  justify-content: space-between;
+  /* padding: 0 20px; */
+}
+
+
+/* left box */
+.home-content .sales-boxes .recent-sales {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.9); /* RGBA avec une opacité de 0.9 (90%) */
+  padding: 20px 30px;
+  margin: 0 20px;
+  border-radius: 12px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+.home-content .sales-boxes .recent-sales1 {
+  width: 70%;
+  background: rgba(255, 255, 255, 0.9); /* RGBA avec une opacité de 0.9 (90%) */
+  padding: 20px 30px;
+  margin: 0 20px;
+  border-radius: 12px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+.home-content .sales-boxes .recent-sales1{
+  width: 100%;
+  background: rgba(255, 255, 255, 0.9); /* RGBA avec une opacité de 0.9 (90%) */
+  padding: 20px 30px;
+  margin: 0 20px;
+  border-radius: 12px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+.home-content .sales-boxes .recent-sales1 form .textarea1 {
+    width: 100%;
+    height: 300px;
+    border: 2px solid #fff; /* Ajoutez une bordure initiale */
+    border-radius: 10px; /* Ajoutez la bordure arrondie */
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.9); /* RGBA avec une opacité de 0.9 (90%) */
+}
+
+.home-content .sales-boxes .recent-sales1 form textarea:focus {
+    border-color: #3498db; /* Changez la couleur de la bordure lorsque le textarea est en focus */
+    outline: none; /* Supprimez l'effet de contour */
+}
+
+ .home-content .sales-boxes .recent-sales1 form button{
+   font-size: 20px;
+  font-weight: 410;
+  border-radius: 10px; /* Arrondi les bordures */
+  background-color: #3498db; /* Couleur de fond */
+  color: #ffffff; /* Couleur du texte */
+  padding: 10px 20px; /* Espacement interne */
+  border: none; /* Supprime la bordure */
+  cursor: pointer; /* Curseur de la souris */
+  height: 50px;
+ }
+
+.home-content .sales-boxes .sales-details1{
+  width:100%;
+  display: flex;
+  flex-direction:row;
+  height:200px;
+  justify-content:space-between
+}
+
+.home-content .sales-boxes .sales-details1 .infos{
+  width: 65%;
+  height: 100%;
+  display:flex;
+  flex-direction:row;
+  justify-content:space-around;
+}
+.home-content .sales-boxes .sales-details1 .message{
+  width: 25%;
+  height: 100%;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-around;
+  align-items:center;
+}
+.home-content .sales-boxes .sales-details2 div{
+  weight: 10%;
+  height: 90%;
+}
+.home-content .sales-boxes .sales-details2 .message button {
+  font-size: 15px;
+  font-weight: 410;
+  border-radius: 12px; /* Arrondi les bordures */
+  background-color: #3498db; /* Couleur de fond */
+  color: #ffffff; /* Couleur du texte */
+  padding: 10px 20px; /* Espacement interne */
+  border: none; /* Supprime la bordure */
+  cursor: pointer; /* Curseur de la souris */
+  height: 40px;
+}
+.home-content .sales-boxes .sales-details1 .message button {
+  font-size: 15px;
+  font-weight: 410;
+  border-radius: 12px; /* Arrondi les bordures */
+  background-color: #3498db; /* Couleur de fond */
+  color: #ffffff; /* Couleur du texte */
+  padding: 10px 20px; /* Espacement interne */
+  border: none; /* Supprime la bordure */
+  cursor: pointer; /* Curseur de la souris */
+  height: 40px;
+}
+
+.home-content .sales-boxes .sales-details{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.sales-boxes .box .title{
+  font-size: 24px;
+  font-weight: 500;
+  display:flex;
+  flex-direction:row;
+  align-items:space-between;
+  justify-content: space-between;
+  /* margin-bottom: 10px; */
+}
+
+.sales-boxes .box .title button {
+  font-size: 15px;
+  font-weight: 400;
+  border-radius: 12px; /* Arrondi les bordures */
+  background-color: #3498db; /* Couleur de fond */
+  color: #ffffff; /* Couleur du texte */
+  padding: 10px 20px; /* Espacement interne */
+  border: none; /* Supprime la bordure */
+  cursor: pointer; /* Curseur de la souris */
+  height: 40px;
+}
+
+.profil {
+    width: 15%; /* Largeur de la div */
+    height: 100%; /* Hauteur de la div */
+    border-radius: 5%; /* Forme circulaire */
+    overflow: hidden; /* Masque tout contenu dépassant de la div */
+    background-image: url('{{ url_for('static', filename='image/profile.jpg') }}'); /* Chemin vers votre image */
+    background-size: cover; /* Ajuste la taille de l'image */
+    background-position: center; /* Centre l'image */
+    border: 2px solid #fff;
+}
+
+
+.sales-boxes .box .title button:hover {
+  background-color: #2980b9; /* Changement de couleur au survol */
+}
+.sales-boxes .sales-details li.topic{
+  font-size: 20px;
+  font-weight: 500;
+}
+.sales-boxes .sales-details li{
+  list-style: none;
+  margin: 8px 0;
+}
+.sales-boxes .sales-details li a{
+  font-size: 18px;
+  color: #333;
+  font-size: 400;
+  text-decoration: none;
+}
+.sales-boxes .box .button{
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+.sales-boxes .box .button a{
+  color: #fff;
+  background: #0A2558;
+  padding: 4px 12px;
+  font-size: 15px;
+  font-weight: 400;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+.sales-boxes .box .button a:hover{
+  background:  #0d3073;
+}
+
+/* Right box */
+.home-content .sales-boxes .top-sales{
+  width: 25%;
+  background: rgba(255, 255, 255, 0.9); /* RGBA avec une opacité de 0.9 (90%) */
+  padding: 20px 30px;
+  margin: 0 20px 0 0;
+  border-radius: 12px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+.sales-boxes .top-sales li{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 10px 0;
+}
+.sales-boxes .top-sales li a img{
+  height: 40px;
+  width: 40px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-right: 10px;
+  background: #333;
+}
+.sales-boxes .top-sales li a{
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+.sales-boxes .top-sales li .product,
+.price{
+  font-size: 17px;
+  font-weight: 400;
+  color: #333;
+}
+/* Responsive Media Query */
+@media (max-width: 1240px) {
+  .sidebar{
+    width: 60px;
+  }
+  .sidebar.active{
+    width: 220px;
+  }
+  .home-section{
+    width: calc(100% - 60px);
+    left: 60px;
+  }
+  .sidebar.active ~ .home-section{
+    left: 220px;
+    width: calc(100% - 220px);
+    overflow: hidden;
+  }
+  .home-section nav{
+    width: calc(100% - 60px);
+    left: 60px;
+  }
+  .sidebar.active ~ .home-section nav{
+    width: calc(100% - 220px);
+    left: 220px;
+  }
+}
+@media (max-width: 1150px) {
+  .home-content .sales-boxes{
+    flex-direction: column;
+  }
+  .home-content .sales-boxes .box{
+    width: 100%;
+    overflow-x: scroll;
+    margin-bottom: 30px;
+  }
+  .home-content .sales-boxes .top-sales{
+    margin: 0;
+  }
+}
+@media (max-width: 1000px) {
+  .overview-boxes .box{
+    width: calc(100% / 2 - 15px);
+    margin-bottom: 15px;
+  }
+}
+@media (max-width: 700px) {
+  nav .sidebar-button .dashboard,
+  nav .profile-details .admin_name,
+  nav .profile-details i{
+    display: none;
+  }
+  .home-section nav .profile-details{
+    height: 50px;
+    min-width: 40px;
+  }
+  .home-content .sales-boxes .sales-details{
+    width: 560px;
+  }
+}
+@media (max-width: 550px) {
+  .overview-boxes .box{
+    width: 100%;
+    margin-bottom: 15px;
+  }
+  .sidebar.active ~ .home-section nav .profile-details{
+    display: none;
+  }
+}
+@media (max-width: 400px) {
+  .sidebar{
+    width: 0;
+  }
+  .sidebar.active{
+    width: 60px;
+  }
+  .home-section{
+    width: 100%;
+    left: 0;
+  }
+  .sidebar.active ~ .home-section{
+    left: 60px;
+    width: calc(100% - 60px);
+  }
+  .home-section nav{
+    width: 100%;
+    left: 0;
+  }
+  .sidebar.active ~ .home-section nav{
+    left: 60px;
+    width: calc(100% - 60px);
+  }
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 190px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+.gauche{
+  background-color:#3498db; /* Couleur de fond */
+  margin-right: 10px;
+  border-radius: 5px;
+  width: 70%;
+  height: 25px;
+  border: none;
+}
+
+/* Styles pour le popup */
+.popup {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+    margin-button : 20px;
+}
+
+.popup1 {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+    margin-button : 20px;
+}
+
+.popup-content {
+    background-color: #fff;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 700px;
+    display: flex; /* Ajout de flexbox */
+    flex-direction: column; /* Les éléments sont disposés en colonne */
+    align-items: center; /* Centrer horizontalement les éléments */
+}
+
+.popup-content form {
+    width: 100%; /* Pour occuper toute la largeur de .popup-content */
+    display: flex; /* Utilisation de flexbox */
+    flex-direction: column; /* Les éléments sont disposés en colonne */
+    align-items: center; /* Centrer les éléments horizontalement */
+
+}
+
+.popup-content .form1 {
+    width: 100%; /* Pour occuper toute la largeur de .popup-content */
+    display: none; /* Utilisation de flexbox */
+    flex-direction: column; /* Les éléments sont disposés en colonne */
+    align-items: center; /* Centrer les éléments horizontalement */
+
+}
+.popup-content .form2 {
+    width: 100%; /* Pour occuper toute la largeur de .popup-content */
+    display: none; /* Utilisation de flexbox */
+    flex-direction: column; /* Les éléments sont disposés en colonne */
+    align-items: center; /* Centrer les éléments horizontalement */
+
+}
+
+.popup-content .form3 {
+    width: 100%; /* Pour occuper toute la largeur de .popup-content */
+    display: none; /* Utilisation de flexbox */
+    flex-direction: column; /* Les éléments sont disposés en colonne */
+    align-items: center; /* Centrer les éléments horizontalement */
+
+}
+
+.popup-content div{
+    width: 70%; /* Pour occuper toute la largeur de .popup-content */
+    display: flex; /* Utilisation de flexbox */
+    flex-direction: row; /* Les éléments sont disposés en colonne */
+    align-items: center; /* Centrer les éléments horizontalement */
+
+}
+.popup-content form label {
+    width: 100%; /* Occupera toute la largeur */
+    max-width: 400px; /* Largeur maximale */
+    margin-bottom: 10px; /* Espacement entre chaque élément */
+}
+
+.popup-content form input,
+.popup-content form select,
+.popup-content table,
+.popup-content form textarea {
+    width: 100%; /* Occupera toute la largeur */
+    max-width: 400px; /* Largeur maximale */
+    padding: 8px; /* Espacement interne */
+    margin-bottom: 20px; /* Espacement entre chaque élément */
+}
+.popup-content table{
+  margin-top: 20px;
+  width: 100%; /* Occupera toute la largeur */
+  max-width: 550px; /* Largeur maximale */
+  padding: 8px; /* Espacement interne */
+  margin-bottom: 20px; /* Espacement entre chaque élément */
+
+}
+
+.popup-content table tr td {
+  padding: 12px 10px;
+  border: 1px solid #ddd;
+}
+
+/* Bouton pour fermer le popup */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    display:none;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.close1 {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    display:none;
+}
+
+.close1:hover,
+.close1:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+.popup-content form button {
+  font-size: 20px;
+  font-weight: 400;
+  border-radius: 12px; /* Arrondi les bordures */
+  background-color: #3498db; /* Couleur de fond */
+  color: #ffffff; /* Couleur du texte */
+  padding: 10px 20px; /* Espacement interne */
+  border: none; /* Supprime la bordure */
+  cursor: pointer; /* Curseur de la souris */
+  height: 50px;
+  width: 50%;
+}
+
+.popup-content div button {
+    font-size: 20px;
+    font-weight: 400;
+    border-radius: 12px; /* Arrondi les bordures */
+    background-color: #3498db; /* Couleur de fond */
+    color: #ffffff; /* Couleur du texte */
+    padding: 10px 20px; /* Espacement interne */
+    border: none; /* Supprime la bordure */
+    cursor: pointer; /* Curseur de la souris */
+    height: 50px;
+    width: 50%;
+    margin-right: 3%; /* Ajoute de l'espace entre les boutons */
+    margin-left: 3%; /* Ajoute de l'espace entre les boutons */
+}
+
+.popup12{
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+    margin-button : 20px;
+}
+.popup121{
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+    margin-button : 20px;
+}
+
+.popup-content1 {
+    background-color: #fff;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid orange;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 700px;
+    display: flex; /* Ajout de flexbox */
+    flex-direction: column; /* Les éléments sont disposés en colonne */
+    align-items: center; /* Centrer horizontalement les éléments */
+}
+
+.popup-content1 div button {
+    font-size: 20px;
+    font-weight: 400;
+    border-radius: 12px; /* Arrondi les bordures */
+    background-color: #3498db; /* Couleur de fond */
+    color: #ffffff; /* Couleur du texte */
+    padding: 10px 20px; /* Espacement interne */
+    border: none; /* Supprime la bordure */
+    cursor: pointer; /* Curseur de la souris */
+    height: 50px;
+    width: 50%;
+    margin-right: 3%; /* Ajoute de l'espace entre les boutons */
+    margin-left: 3%; /* Ajoute de l'espace entre les boutons */
+    margin-top:25px;
+}
+
+
+.bnt12 a{
+    text-decoration:none;
+    color: #fff;
+}
+
+.popup-content1 div{
+    width: 70%; /* Pour occuper toute la largeur de .popup-content */
+    display: flex; /* Utilisation de flexbox */
+    flex-direction: row; /* Les éléments sont disposés en colonne */
+    align-items: center; /* Centrer les éléments horizontalement */
+}
+.popup-content1 form label {
+    width: 100%; /* Occupera toute la largeur */
+    max-width: 400px; /* Largeur maximale */
+    margin-bottom: 10px; /* Espacement entre chaque élément */
+}
+
+.popup-content1 form input,
+.popup-content1 form select,
+.popup-content1 table,
+.popup-content form textarea {
+    width: 100%; /* Occupera toute la largeur */
+    max-width: 470px; /* Largeur maximale */
+    padding: 8px; /* Espacement interne */
+    margin-bottom: 20px; /* Espacement entre chaque élément */
+}
+
+.popup-content1 table{
+  margin-top: 0px;
+  width: 100%; /* Occupera toute la largeur */
+  max-width: 550px; /* Largeur maximale */
+  padding: 8px; /* Espacement interne */
+  margin-bottom: 0px; /* Espacement entre chaque élément */
+
+}
+
+.popup-content1 table tr td {
+  padding: 17px 10px;
+  border: 1px solid orange;
+}
+.popup-content1 .signe{
+  width: 100%; /* Occupera toute la largeur */
+  max-width: 550px; /* Largeur maximale */
+  padding: 8px; /* Espacement interne */
+  height : 120px;
+  display:flex;
+  flex-direction:row
+  justify-content:center
+  align-items:center;
+
+}
+.popup-content1 .signe .signature {
+  width: 48%;
+  height: 100%;
+  border: 1px solid orange;
+  margin: 0 10px; /* Ajoute de l'espace sur les côtés gauche et droit */
+}
+.popup-content1 .signe .clients {
+  width: 48%;
+  height: 100%;
+  margin: 0 10px; /* Ajoute de l'espace sur les côtés gauche et droit */
+  display:flex;
+  flex-direction:column;
+  justify-content:space-evenly;
+}
+.popup-content1 .signe .clients p {
+  color:orange;
+}
+
+.black-text {
+   color: orange;
+  font-weight: bold; /* Si vous voulez rendre le texte gras */
+  font-size: 0.9em; /* Augmente légèrement la taille du texte */
+}
+
+.orange-text {
+  color: black;
+  font-weight: bold; /* Si vous voulez rendre le texte gras */
+  font-size: 1em; /* Augmente légèrement la taille du texte */
+}
+
+.popup-content1 .signe1{
+  width: 100%; /* Occupera toute la largeur */
+  max-width: 550px; /* Largeur maximale */
+  padding: 0px; /* Espacement interne */
+  height : 60px;
+  display:flex;
+  flex-direction:row
+  justify-content:center
+  align-items:center;
+  margin-bottom:5px;
+
+
+}
+.popup-content1 .signe1 .signature1 {
+  width: 70%;
+  height: 100%;
+  border: 1px solid orange;
+  margin: 0 3px; /* Ajoute de l'espace sur les côtés gauche et droit */
+  display:flex;
+  justify-content:end;
+  align-items:center;
+  padding:4px;
+}
+.popup-content1 .signe1 .total {
+  width: 30%;
+  height: 100%;
+  margin: 0 3px; /* Ajoute de l'espace sur les côtés gauche et droit */
+  display:flex;
+  border: 1px solid orange;
+  flex-direction:column;
+  justify-content:space-evenly;
+}
+.popup-content1 .signe1 .total1 {
+  width: 30%;
+  height: 100%;
+  margin: 0 3px; /* Ajoute de l'espace sur les côtés gauche et droit */
+  display:flex;
+  border: 1px solid orange;
+  flex-direction:column;
+  justify-content:space-evenly;
+}
+
+.popup-content1 .signe1 .total2 {
+  width: 30%;
+  height: 100%;
+  margin: 0 3px; /* Ajoute de l'espace sur les côtés gauche et droit */
+  display:flex;
+  border: 1px solid orange;
+  flex-direction:column;
+  justify-content:space-evenly;
+}
+
+/* Style de la liste déroulante */
+    .select {
+        appearance: none; /* Supprimer la flèche par défaut */
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        padding: 4px;
+        cursor: pointer;
+        display: none;
+    }
+
+    /* Style des options de la liste déroulante */
+    .select option {
+        cursor: pointer;
+    }
+
+    /* Style de la liste déroulante lors du survol */
+    .select:hover {
+        border-color: #999;
+    }
+    /* Afficher la liste déroulante lorsque la classe active est présente */
+.select.active {
+    display: block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+@media print {
+    .btn12, #btn11,#btn111 {
+        display: none;
+    }
+    .popup12, .popup12 * {
+        display: block !important; /* S'assurer que tous les éléments de la section à imprimer sont visibles */
+    }
+}
+
+.home-content .sales-boxes .recent-sales2{
+  width: 100%;
+  background: rgba(255, 255, 255, 0.9); /* RGBA avec une opacité de 0.9 (90%) */
+  padding: 20px 30px;
+  margin: 0 20px;
+  border-radius: 12px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  height:800px;
+}
+
+.recent-sales2 .formulaire{
+    width: 70%; /* Pour occuper toute la largeur de .popup-content */
+    display: flex; /* Utilisation de flexbox */
+    flex-direction: column; /* Les éléments sont disposés en colonne */
+    align-items: center; /* Centrer les éléments horizontalement */
+    height:100%;
+    margin-left:140px;
+    margin-top:5px;
+    border: 2px solid #fff; /* Ajoutez une bordure initiale */
+    border-radius: 10px; /* Ajoutez la bordure arrondie */
+    background: rgba(255, 255, 255, 0.9); /* RGBA avec une opacité de 0.9 (90%) */
+}
+
+.home-content .sales-boxes .recent-sales3{
+  width: 100%;
+  background: rgba(255, 255, 255, 0.9); /* RGBA avec une opacité de 0.9 (90%) */
+  padding: 20px 30px;
+  margin: 0 20px;
+  border-radius: 12px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  height:950px;
+}
+
+.recent-sales3 .formulaire{
+    width: 70%; /* Pour occuper toute la largeur de .popup-content */
+    display: flex; /* Utilisation de flexbox */
+    flex-direction: column; /* Les éléments sont disposés en colonne */
+    align-items: center; /* Centrer les éléments horizontalement */
+    height:100%;
+    margin-left:140px;
+    margin-top:5px;
+    border: 2px solid #fff; /* Ajoutez une bordure initiale */
+    border-radius: 10px; /* Ajoutez la bordure arrondie */
+    background: rgba(255, 255, 255, 0.9); /* RGBA avec une opacité de 0.9 (90%) */
+}
+
+.home-content .sales-boxes .recent-sales4{
+  width: 100%;
+  background: rgba(255, 255, 255, 0.9); /* RGBA avec une opacité de 0.9 (90%) */
+  padding: 20px 30px;
+  margin: 0 20px;
+  border-radius: 12px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  height:550px;
+}
+
+.recent-sales4 .formulaire{
+    width: 70%; /* Pour occuper toute la largeur de .popup-content */
+    display: flex; /* Utilisation de flexbox */
+    flex-direction: column; /* Les éléments sont disposés en colonne */
+    align-items: center; /* Centrer les éléments horizontalement */
+    height:100%;
+    margin-left:140px;
+    margin-top:5px;
+    border: 2px solid #fff; /* Ajoutez une bordure initiale */
+    border-radius: 10px; /* Ajoutez la bordure arrondie */
+    background: rgba(255, 255, 255, 0.9); /* RGBA avec une opacité de 0.9 (90%) */
+}
+
+.home-content .sales-boxes .recent-sales5{
+  width: 100%;
+  background: rgba(255, 255, 255, 0.9); /* RGBA avec une opacité de 0.9 (90%) */
+  padding: 20px 30px;
+  margin: 0 20px;
+  border-radius: 12px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  height:370px;
+}
+
+.recent-sales5 .formulaire{
+    width: 70%; /* Pour occuper toute la largeur de .popup-content */
+    display: flex; /* Utilisation de flexbox */
+    flex-direction: column; /* Les éléments sont disposés en colonne */
+    align-items: center; /* Centrer les éléments horizontalement */
+    height:100%;
+    margin-left:140px;
+    margin-top:5px;
+    border: 2px solid #fff; /* Ajoutez une bordure initiale */
+    border-radius: 10px; /* Ajoutez la bordure arrondie */
+    background: rgba(255, 255, 255, 0.9); /* RGBA avec une opacité de 0.9 (90%) */
+}
+
+.formulaire div{
+   width:50%;
+   display:flex;
+   flex-direction:row;
+   justify-content:space-around;
+   align-items:center;
+}
+
+.formulaire div button {
+    font-size: 20px;
+    font-weight: 400;
+    border-radius: 12px; /* Arrondi les bordures */
+    background-color: #3498db; /* Couleur de fond */
+    color: #ffffff; /* Couleur du texte */
+    padding: 10px 20px; /* Espacement interne */
+    border: none; /* Supprime la bordure */
+    cursor: pointer; /* Curseur de la souris */
+    height: 50px;
+    width: 50%;
+    margin-right: 3%; /* Ajoute de l'espace entre les boutons */
+    margin-left: 3%; /* Ajoute de l'espace entre les boutons */
+    margin-top:5px;
+}
+
+.formulaire form {
+    width: 100%; /* Pour occuper toute la largeur de .popup-content */
+    display: flex; /* Utilisation de flexbox */
+    flex-direction: column; /* Les éléments sont disposés en colonne */
+    align-items: center; /* Centrer les éléments horizontalement */
+
+}
+
+.formulaire form label {
+    width: 100%; /* Occupera toute la largeur */
+    max-width: 470px; /* Largeur maximale */
+    margin-bottom: 5px; /* Espacement entre chaque élément */
+}
+
+.formulaire form input,
+.formulaire form select,
+.formulaire table,
+.formulaire form textarea {
+    width: 100%; /* Occupera toute la largeur */
+    max-width: 470px; /* Largeur maximale */
+    padding: 8px; /* Espacement interne */
+    margin-bottom: 15px; /* Espacement entre chaque élément */
+}
+
+.home-content .sales-boxes .recent-sales1 form textarea:focus,
+.home-content .sales-boxes .recent-sales form textarea:focus,
+.home-content .sales-boxes .formulaire form textarea:focus,
+.popup-content1 form input:focus,
+.popup-content1 form select:focus,
+.popup-content form input:focus,
+.popup-content form select:focus,
+.popup-content form textarea:focus,
+.formulaire form input:focus,
+.formulaire form select:focus{
+    border-color: #3498db; /* Changez la couleur de la bordure lorsque le textarea est en focus */
+    outline: none; /* Supprimez l'effet de contour */
+}
+
+.icon {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .edit-icon, .delete-icon {
+            cursor: pointer;
+        }
+        .popup0 {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+        .confirmation-container {
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .confirmation-container h2 {
+            margin-bottom: 20px;
+        }
+        .confirmation-container button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .btn-confirm {
+            background-color: red;
+            color: white;
+        }
+        .btn-cancel {
+            background-color: grey;
+            color: white;
+        }
+
+@media screen and (max-width: 768px) {
+
+   .recent-sales2 .formulaire,
+   .recent-sales3 .formulaire,
+   .recent-sales4 .formulaire,
+   .recent-sales5 .formulaire{
+      width: 100%;
+     margin-left:0px;
+   }
+
+   .formulaire div button {
+      font-size: 17px;
+      width:100%;
+      height:35px;
+   }
+   .home-content .sales-boxes  .sales-details1{
+
+       flex-direction:column;
+       margin-bottom:20px;
+       justify-column:space-between;
+       width:100%;
+       height:100%;
+
+   }
+
+   .home-content .sales-boxes .sales-details1 .infos{
+  width: 80%;
+  height: 80%;
+  flex-direction:column;
+}
+.home-content .sales-boxes .sales-details1 .message{
+  width: 50%;
+  height: 10%;
+  display:flex;
+  flex-direction:row;
+  margin-top:50px;
+  justify-content:space-between;
+}
+.profil {
+    width: 35%; /* Largeur de la div */
+    height: 20%; /* Hauteur de la div */
+    position:absolute;
+    top: 170px;
+    right:20px;
+
+}
+.home-content .sales-boxes .recent-sales .sales-details{
+
+      flex-direction:column;
+      align-items: start;
+
+}
+
+}
+
+.select2-container--default .select2-selection--single {
+    height: 100px; /* Ajustez cette valeur pour changer la hauteur */
+    font-size: 14px; /* Ajustez cette valeur pour changer la taille de la police */
+  }
+
+  .select2-container .select2-selection--single .select2-selection__rendered {
+    line-height: 100px; /* Doit correspondre à la hauteur pour centrer le texte */
+  }
+
+  .select2-container .select2-selection--single .select2-selection__arrow {
+    height: 100px; /* Doit correspondre à la hauteur pour centrer la flèche */
+  }
+
+/* Ajoutez ici vos styles CSS si nécessaire */
+        .details li {
+            display: list-item; /* Par défaut, afficher les éléments comme des listes */
+        }
+        .button a {
+            margin: 5px;
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 3px;
+        }
+        .button a.disabled {
+            background-color: #d3d3d3;
+        }
+
+        .eyes-icon {
+            cursor: pointer;
+        }
+        .password-text {
+            display: none;
+        }
+
+        .delete-icon {
+            cursor: pointer;
+            color: red;
+        }
+
+/* Styles pour l'icone de notification */
+.notification-icon {
+    position: relative;
+    cursor: pointer;
+    margin-right: 20px;
+}
+
+.notification-icon i {
+    font-size: 30px;
+}
+
+/* Styles pour l'icone de notification */
+.notification-icon {
+    position: relative;
+    cursor: pointer;
+    margin-right: 20px;
+}
+
+.notification-icon i {
+    font-size: 30px;
+}
+
+.notification-count {
+    position: absolute;
+    top: -5px;
+    right: -10px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 5px 10px;
+    font-size: 8px;
+}
+
+/* Styles pour le popup de notification */
+.notification-popup {
+    position: fixed;
+    top: 0;
+    right: -300px;
+    width: 300px;
+    height: 100%;
+    background-color: white;
+    box-shadow: -2px 0 5px rgba(0,0,0,0.1);
+    transition: right 0.3s ease;
+    z-index: 1000;
+    padding: 20px;
+}
+
+.notification-popup h3 {
+    margin: 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.notification-popup ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.notification-popup ul li {
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Classe pour afficher le popup */
+.notification-popup.show {
+    right: 0;
+}
+
+#notificationList {
+    max-height: 100%;
+    overflow-y: auto;
+}

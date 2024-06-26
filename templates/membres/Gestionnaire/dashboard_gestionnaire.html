@@ -1,0 +1,372 @@
+{% extends "membres/gestionnaire/base_gestion.html"%}
+{% block centre%}
+<div class="home-content">
+        <div class="overview-boxes">
+          <div class="box">
+            <div class="right-side">
+              <div class="box-topic">stocks</div>
+              <div class="number">{{stocktotal[0]}}</div>
+              <div class="indicator">
+                <i class="bx bx-up-arrow-alt"></i>
+                <span class="text">Total produit en stock</span>
+              </div>
+            </div>
+            <i class="bx bx-cart-alt cart"></i>
+          </div>
+          <div class="box">
+            <div class="right-side">
+              <div class="box-topic">Stock faible</div>
+              <div class="number">{{stockfaible[0]}}</div>
+              <div class="indicator">
+                <i class="bx bx-up-arrow-alt"></i>
+                <span class="text">Total stock faible</span>
+              </div>
+            </div>
+            <i class="bx bxs-cart-add cart two"></i>
+          </div>
+          <div class="box">
+            <div class="right-side">
+              <div class="box-topic">Montant</div>
+              <div class="number">{{montantstock[0]}}</div>
+              <div class="indicator">
+                <i class="bx bx-down-arrow-alt down"></i>
+                <span class="text">Total montant stock</span>
+              </div>
+            </div>
+            <i class="bx bxs-cart-download cart four"></i>
+          </div>
+        </div>
+
+    <div class="sales-boxes">
+          <div class="recent-sales box">
+            <div class="title">
+                <p>Stock</p>
+                {% with messages = get_flashed_messages() %}
+                  {% if messages %}
+                    {% for message in messages %}
+                      <p class="alert" style="color:green;">{{ message }}</p><br>
+                    {% endfor %}
+                  {% endif %}
+                {% endwith %}
+            </div>
+              <div class="sales-details">
+        <ul class="details" id="details-produit">
+          <li class="topic">Nom</li>
+          {% for row in resultat1 %}
+          <li><a href="#">{{ row[0] }}</a></li>
+          {% endfor %}
+        </ul>
+                  <ul class="details" id="details-stock">
+          <li class="topic">Stock</li>
+          {% for row in resultat1 %}
+          <li><a href="#">{{ row[2] }}</a></li>
+          {% endfor %}
+        </ul>
+        <ul class="details" id="details-categorie">
+          <li class="topic">Catégorie</li>
+          {% for row in resultat1 %}
+          <li><a href="#">{{ row[1] }}</a></li>
+          {% endfor %}
+        </ul>
+        <ul class="details" id="details-etat">
+            <li class="topic">Etat</li>
+            {% for row in resultat1 %}
+                {% if row[3] > row[2] %}
+                    <li><a href="#" style="color:red;">Faible</a></li>
+                {% elif row[3] == 0 %}
+                    <li><a href="#" style="color:red;">Vide</a></li>
+                {% else %}
+                    <li><a href="#" style="color:blue;">Bon</a></li>
+                {% endif %}
+            {% endfor %}
+
+        </ul>
+      </div>
+            <div class="button">
+              <a href="#" id="moins">Précédent</a>
+              <a href="#" id="plus">Voir plus</a>
+            </div>
+          </div>
+
+        </div><br>
+
+        <div class="sales-boxes">
+          <div class="recent-sales box">
+            <div class="title">
+                <p>Listes des mises à jour stock</p>
+                {% with messages = get_flashed_messages() %}
+                  {% if messages %}
+                    {% for message in messages %}
+                      <p class="alert" style="color:green;">{{ message }}</p><br>
+                    {% endfor %}
+                  {% endif %}
+                {% endwith %}
+            </div>
+            <div class="sales-details">
+              <ul class="details" id="details-date">
+                <li class="topic">Date</li>
+                {% for row in resultat %}
+                  <li><a href="#">{{ row[3] }}</a></li>
+                  {% endfor %}
+              </ul>
+              <ul class="details" id="details-nom">
+                  <li class="topic">Produit</li>
+                  {% for row in resultat %}
+                  <li><a href="#">{{ row[0] }}</a></li>
+                  {% endfor %}
+              </ul>
+              <ul class="details" id="details-quantite">
+                  <li class="topic">Quantité ajouté</li>
+                  {% for row in resultat %}
+                  <li><a href="#">{{ row[2] }}</a></li>
+                  {% endfor %}
+              </ul>
+            </div>
+            <div class="button">
+              <a href="#" id="precedent">Précédent</a>
+              <a href="#" id="voir-plus">Voir plus</a>
+            </div>
+          </div>
+        </div><br>
+
+      <div id="popup" class="popup">
+        <div class="popup-content">
+            <span class="close" id="close-popup">&times;</span>
+            <h2>Ajout de stock</h2><br>
+            <form id="stock-form" method="post" action="{{url_for('stock')}}" >
+                <label for="produit">Produit</label>
+                <select id="produit" name="produit" required>
+                    <option value="">Sélectionnez un produit</option>
+                    {% for produit in produits %}
+                        <option value="{{ produit[0] }}">{{ produit[1] }}</option>
+                    {% endfor %}
+                </select>
+                <label for="nombre">Nombre</label>
+                <input type="number" id="nombre" name="nombre" required>
+                <button id="add-button">Ajouter</button>
+
+
+            <table id="stock-table">
+                <thead>
+                    <tr>
+                        <td>Id</td>
+                        <td>Nom</td>
+                        <td>Quantité</td>
+                        <td>Prix</td>
+                        <td>Catégorie</td>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+
+            <div><button class="btn12"><a href="{{url_for('gestion_stock')}}" style="text-decoration:none;
+    color: #fff;">Retour</a></button>
+                <button id="btn11" type="submit">Valider</button>
+            </div>
+            </form>
+        </div>
+      </div>
+    </div>
+
+<div class="popup0" id="confirmationPopup">
+        <div class="confirmation-container">
+            <h2>Êtes-vous sûr de vouloir supprimer ce stock?</h2>
+            <form id="deleteForm" method="POST">
+                <button type="submit" class="btn-confirm">Confirmer</button>
+                <button type="button" class="btn-cancel" onclick="closePopup()">Annuler</button>
+            </form>
+        </div>
+</div>
+
+</div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var addButton = document.querySelector('#add-button');
+            var stockTable = document.querySelector('#stock-table tbody')
+            var submitButton = document.querySelector('button[type="submit"]'); // Get the submit button;
+
+            addButton.addEventListener('click', function(event) {
+                event.preventDefault();
+
+                var produitId = document.querySelector('#produit').value;
+                var nombre = document.querySelector('#nombre').value;
+
+                fetch('/get_product_info/' + produitId)
+                    .then(response => response.json())
+                    .then(data => {
+                        var newRow = document.createElement('tr');
+                        newRow.innerHTML = '<td>' + produitId + '</td>' +
+                                            '<td>' + data.nom + '</td>' +
+                                            '<td>' + nombre + '</td>' +
+                                            '<td>' + data.prix + '</td>' +
+                                            '<td>' + data.designation + '</td>';
+
+                        stockTable.appendChild(newRow);
+                    })
+                    .catch(error => {
+                        console.error('Erreur lors de la récupération des informations du produit :', error);
+                    });
+            });
+
+
+             submitButton.addEventListener('click', function(event) {
+    event.preventDefault(); // Prevent default form submission
+
+    // Get all rows from the stock table
+    var rows = stockTable.querySelectorAll('tr');
+
+    // Prepare an array to store order data
+    var orderData = [];
+
+    // Iterate over each row and extract data
+    for (var i = 0; i < rows.length; i++) { // Skip the first header row
+      var rowData = {
+        produit_id: parseInt(rows[i].cells[0].textContent),
+        nombre: parseInt(rows[i].cells[2].textContent),
+      };
+
+      orderData.push(rowData);
+    }
+
+    // Send the order data to the server using fetch
+    fetch('/submit_stock', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(orderData) // Convert order data to JSON
+    })
+      .then(response => response.json())
+      .then(data => {
+        // Handle successful submission response
+        console.log('Stock ajouté avec succès:', data);
+
+        // Clear the stock table
+        stockTable.innerHTML = '';
+
+        // Display a success message to the user
+        alert('Stock ajouté avec succès!');
+      })
+      .catch(error => {
+        // Handle submission error
+        console.error('Erreur lors de la soumission de la commande:', error);
+
+        // Display an error message to the user
+        alert('Erreur lors de la soumission de la commande.');
+      });
+  });
+     });
+    </script>
+
+ <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const deleteIcons = document.querySelectorAll('.delete-icon');
+            const popup = document.getElementById('confirmationPopup');
+            const deleteForm = document.getElementById('deleteForm');
+
+            deleteIcons.forEach(icon => {
+                icon.addEventListener('click', function() {
+                    const id = this.getAttribute('data-id');
+                    deleteForm.action = `/supprimer_stock/${id}`;
+                    popup.style.display = 'flex';
+                });
+            });
+        });
+
+        function closePopup() {
+            document.getElementById('confirmationPopup').style.display = 'none';
+        }
+    </script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const articlesParPage = 7;
+    let pageActuelle = 1;
+
+    const sectionsDetails = [
+        document.getElementById('details-produit'),
+        document.getElementById('details-stock'),
+        document.getElementById('details-categorie'),
+        document.getElementById('details-etat')
+    ];
+
+    function afficherPage(page) {
+        sectionsDetails.forEach(section => {
+            const articles = section.querySelectorAll('li:not(.topic)');
+            articles.forEach((article, index) => {
+                article.style.display = (index >= (page - 1) * articlesParPage && index < page * articlesParPage) ? '' : 'none';
+            });
+        });
+    }
+
+    document.getElementById('plus').addEventListener('click', function(e) {
+        e.preventDefault();
+        const totalArticles = sectionsDetails[0].querySelectorAll('li:not(.topic)').length;
+        const totalPages = Math.ceil(totalArticles / articlesParPage);
+        if (pageActuelle < totalPages) {
+            pageActuelle++;
+            afficherPage(pageActuelle);
+        }
+    });
+
+    document.getElementById('moins').addEventListener('click', function(e) {
+        e.preventDefault();
+        if (pageActuelle > 1) {
+            pageActuelle--;
+            afficherPage(pageActuelle);
+        }
+    });
+
+    // Initialiser l'affichage de la première page
+    afficherPage(pageActuelle);
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const articlesParPage = 7;
+    let pageActuelle = 1;
+
+    const sectionsDetails = [
+        document.getElementById('details-date'),
+        document.getElementById('details-nom'),
+        document.getElementById('details-quantite')
+    ];
+
+    function afficherPage(page) {
+        sectionsDetails.forEach(section => {
+            const articles = section.querySelectorAll('li:not(.topic)');
+            articles.forEach((article, index) => {
+                article.style.display = (index >= (page - 1) * articlesParPage && index < page * articlesParPage) ? '' : 'none';
+            });
+        });
+    }
+
+    document.getElementById('voir-plus').addEventListener('click', function(e) {
+        e.preventDefault();
+        const totalArticles = sectionsDetails[0].querySelectorAll('li:not(.topic)').length;
+        const totalPages = Math.ceil(totalArticles / articlesParPage);
+        if (pageActuelle < totalPages) {
+            pageActuelle++;
+            afficherPage(pageActuelle);
+        }
+    });
+
+    document.getElementById('precedent').addEventListener('click', function(e) {
+        e.preventDefault();
+        if (pageActuelle > 1) {
+            pageActuelle--;
+            afficherPage(pageActuelle);
+        }
+    });
+
+    // Initialiser l'affichage de la première page
+    afficherPage(pageActuelle);
+});
+</script>
+
+{% endblock %}

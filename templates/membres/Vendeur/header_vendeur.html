@@ -1,0 +1,37 @@
+<nav>
+        <div class="sidebar-button">
+          <i class="bx bx-menu sidebarBtn"></i>
+          <span class="dashboard">Tableau de bord</span>
+        </div>
+        <div class="search-box">
+          <input type="text" placeholder="Rechercher..." />
+          <i class="bx bx-search"></i>
+        </div>
+
+    <!-- Icone de notification avec compteur -->
+    <div class="notification-icon" style="display:none;">
+        <i class="bx bx-bell" id="notificationIcon"></i>
+        <span class="notification-count" id="notificationCount">0</span>
+    </div>
+
+        <div class="profile-details" id="profile">
+          <img src="{{ url_for('static', filename='image/upload/' + filename) }}" alt="" />
+          <span class="admin_name">Vendeur</span>
+          <i class="bx bx-chevron-down" id="dropdown-icon"></i>
+        </div>
+       </nav>
+
+      <!-- Ajouter une div distincte pour la liste déroulante -->
+    <div class="dropdown-content" id="dropdown-menu">
+        <a href="{{ url_for('profil_vendeur') }}" onclick="selectOption('Profile')">Profile</a>
+        <!-- <a href="{{ url_for('equipe') }}" onclick="selectOption('Equipe')">Equipe</a> -->
+        <a href="{{url_for('userLogout')}}" onclick="selectOption('Deconnexion')">Deconnexion</a>
+    </div>
+
+<!-- Popup de notification -->
+<div class="notification-popup" id="notificationPopup">
+    <h3>Notifications</h3>
+    <ul id="notificationList">
+        <!-- Les notifications seront ajoutées ici -->
+    </ul>
+</div>

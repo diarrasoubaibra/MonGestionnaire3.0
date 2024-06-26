@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block centre%}
+
+<div class="home-content">
+  <div class="sales-boxes">
+    <div class="recent-sales3 box">
+      <div class="formulaire">
+        <h2>Modification membre</h2><br>
+
+        <form method="post" action="{{ url_for('modifier_membre', id_utilisateur=membre[0])}}"
+          enctype="multipart/form-data">
+          {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            {% for message in messages %}
+              <p class="alert">{{ message }}</p><br>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+          <label for="nom">Nom</label>
+          <input type="text" id="nom" name="nom" value="{{ membre[1] }}" required>
+
+          <label for="prenommodif">Prénom</label>
+          <input type="text" id="prenommodif" name="prenommodif" value="{{ membre[2] }}" required>
+
+          <label for="postemodif">Poste</label>
+          <select id="postemodif" name="postemodif" required>
+            <option value="">Sélectionnez un poste</option>
+            <option value="gestionnaire" {% if membre[3]=='gestionnaire' %}selected{% endif %}>Gestionnaire</option>
+            <option value="vendeur" {% if membre[3]=='vendeur' %}selected{% endif %}>Vendeur</option>
+          </select>
+
+          <label for="tel">Téléphone</label>
+          <input type="text" id="tel" name="tel" value="{{ membre[4] }}" required>
+
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" value="{{ membre[5] }}" required>
+
+          <label for="login">Login</label>
+          <input type="text" id="login" name="login" value="{{ membre[6] }}" required>
+
+          <label for="password">Mot de passe</label>
+          <input type="password" id="password" name="password" required>
+
+          <label for="confmotpass">Confirmez le mot de passe</label>
+          <input type="password" id="confmotpass" name="confmotpass" required>
+
+          <label for="image">Image</label>
+          <input type="file" id="image" name="image" accept="image/*">
+          
+          {% if membre[7] %}
+          <img src="{{ url_for('static', filename='image/upload/' + image_actuelle) }}" alt="Image actuelle" style="max-width: 300px; max-height: 70px;border-radius: 25px;position: absolute;bottom:110px;right:370px;">
+      {% endif %}
+
+          <div>
+            <button type="#"><a href="{{url_for('equipe')}}" style="text-decoration:none; color: #fff;">Annuler</a></button>
+            <button type="submit">Confirmer</button>
+          </div>
+        </form>
+
+      </div>
+    </div><br>
+  </div>
+</div>
+{% endblock %}

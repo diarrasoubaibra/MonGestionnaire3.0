@@ -1,0 +1,53 @@
+<div class="sidebar">
+      <div class="logo-details" style="background-image: url({{ url_for('static', filename='image/logo.jpg') }});
+hheight: 100vh;
+  background-size: contain;
+  background-position: center;">
+        <span class="logo_name">DL SION COMPAGNIE</span>
+      </div>
+      <ul class="nav-links">
+        <li>
+          <a href="{{ url_for('dashboard_gestionnaire') }}" class="active">
+            <i class="bx bx-grid-alt"></i>
+            <span class="links_name">Tableau de bord</span>
+          </a>
+        </li>
+        <li>
+          <a href="{{ url_for('gestion_produit') }}">
+            <i class="bx bx-box"></i>
+            <span class="links_name">Produits</span>
+          </a>
+        </li>
+        <li>
+          <a href="{{ url_for('gestion_client') }}">
+            <i class="bx bx-user"></i>
+            <span class="links_name">Clients</span>
+          </a>
+        </li>
+        <li>
+          <a href="{{ url_for('gestion_commande') }}">
+            <i class="bx bx-user"></i>
+            <span class="links_name">Commandes</span>
+          </a>
+        </li>
+        <li>
+          <a href="{{ url_for('gestion_ventes') }}">
+            <i class="bx bx-cart-alt cart"></i>
+            <span class="links_name">ventes</span>
+          </a>
+        </li>
+        <li>
+          <a href="{{ url_for('gestion_stock') }}">
+            <i class="bx bx-coin-stack"></i>
+            <span class="links_name">Stock</span>
+          </a>
+        </li>
+
+        <li class="log_out">
+          <a href="{{url_for('userLogout')}}">
+            <i class="bx bx-log-out"></i>
+            <span class="links_name">Déconnexion</span>
+          </a>
+        </li>
+      </ul>
+    </div>

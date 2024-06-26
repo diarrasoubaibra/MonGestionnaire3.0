@@ -1,0 +1,22 @@
+<nav>
+        <div class="sidebar-button">
+          <i class="bx bx-menu sidebarBtn"></i>
+          <span class="dashboard">Tableau de bord</span>
+        </div>
+        <div class="search-box">
+          <input type="text" placeholder="Rechercher..." />
+          <i class="bx bx-search"></i>
+        </div>
+        <div class="profile-details" id="profile">
+          <img src="{{ url_for('static', filename='image/upload/' + filename) }}" alt="" />
+          <span class="admin_name">Gestionnaire</span>
+          <i class="bx bx-chevron-down" id="dropdown-icon"></i>
+        </div>
+       </nav>
+
+      <!-- Ajouter une div distincte pour la liste déroulante -->
+    <div class="dropdown-content" id="dropdown-menu">
+        <a href="{{ url_for('profil_gestionnaire') }}" onclick="selectOption('Profile')">Profile</a>
+        <!-- <a href="{{ url_for('equipe') }}" onclick="selectOption('Equipe')">Equipe</a> -->
+        <a href="{{url_for('userLogout')}}" onclick="selectOption('Deconnexion')">Deconnexion</a>
+    </div>

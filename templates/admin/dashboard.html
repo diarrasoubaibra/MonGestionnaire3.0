@@ -1,0 +1,390 @@
+{% extends "base.html"%}
+{% block centre%}
+<div class="home-content">
+        <div class="overview-boxes">
+          <div class="box">
+            <div class="right-side">
+              <div class="box-topic">Ventes</div>
+              <div class="number">{{ total_ventes }}</div>
+              <div class="indicator">
+                <i class="bx bx-up-arrow-alt"></i>
+                <span class="text">Ventes totales</span>
+              </div>
+            </div>
+            <i class="bx bx-cart-alt cart"></i>
+          </div>
+          <div class="box">
+            <div class="right-side">
+              <div class="box-topic">Commande</div>
+              <div class="number">{{ total_commande}}</div>
+              <div class="indicator">
+                <i class="bx bx-up-arrow-alt"></i>
+                <span class="text">Commande en cours</span>
+              </div>
+            </div>
+            <i class="bx bxs-cart-add cart two"></i>
+          </div>
+          <div class="box">
+            <div class="right-side">
+              <div class="box-topic">Clients</div>
+              <div class="number">{{ total_client}}</div>
+              <div class="indicator">
+                <i class="bx bx-up-arrow-alt"></i>
+                <span class="text">Total client</span>
+              </div>
+            </div>
+            <i class="bx bx-cart cart three"></i>
+          </div>
+          <div class="box">
+            <div class="right-side">
+              <div class="box-topic">Caisse</div>
+              <div class="number">{{ total_CA }}</div>
+              <div class="indicator">
+                <i class="bx bx-down-arrow-alt down"></i>
+                <span class="text">Chiffre d'affaire</span>
+              </div>
+            </div>
+            <i class="bx bxs-cart-download cart four"></i>
+          </div>
+        </div>
+
+  <div class="overview-boxes">
+          <div class="box">
+            <div class="right-side">
+              <div class="box-topic">Stock</div>
+              <div class="number">{{ stocktotal}}</div>
+              <div class="indicator">
+                <i class="bx bx-up-arrow-alt"></i>
+                <span class="text">Total produit en stock</span>
+              </div>
+            </div>
+            <i class="bx bx-cart-alt cart"></i>
+          </div>
+          <div class="box">
+            <div class="right-side">
+              <div class="box-topic">Fournisseur</div>
+              <div class="number">{{ fournisseur }}</div>
+              <div class="indicator">
+                <i class="bx bx-up-arrow-alt"></i>
+                <span class="text">Total fournisseur</span>
+              </div>
+            </div>
+            <i class="bx bxs-cart-add cart two"></i>
+          </div>
+          <div class="box">
+            <div class="right-side">
+              <div class="box-topic">Bénéfice</div>
+              <div class="number">{{ benefice}}</div>
+              <div class="indicator">
+                <i class="bx bx-up-arrow-alt"></i>
+                <span class="text">Bénéfice sur les ventes</span>
+              </div>
+            </div>
+            <i class="bx bx-cart cart three"></i>
+          </div>
+          <div class="box">
+            <div class="right-side">
+              <div class="box-topic">Montant stock</div>
+              <div class="number">{{ montantstock }}</div>
+              <div class="indicator">
+                <i class="bx bx-down-arrow-alt down"></i>
+                <span class="text">Total dépense stock </span>
+              </div>
+            </div>
+            <i class="bx bxs-cart-download cart four"></i>
+          </div>
+        </div>
+
+
+  <div class="sales-boxes">
+    <div class="recent-sales box">
+      <div class="title">
+        <p>Ventes du jour</p>
+      </div>
+      <div class="sales-details">
+        <ul class="details" id="details-date">
+          <li class="topic">Date</li>
+          {%for row in dash%}
+          <li><a href="#">{{row[0]}}</a></li>
+          {%endfor%}
+
+        </ul>
+        <ul class="details" id="details-client">
+          <li class="topic">Clients</li>
+          {%for row in dash%}
+          <li><a href="#">{{row[1]}}</a></li>
+          {%endfor%}
+        </ul>
+        <ul class="details" id="details-statut">
+          <li class="topic">Statut</li>
+          {% for row in dash %}
+          <li>
+            <a class="topic" href="#" onclick="toggleDropdown(this, '{{ row[2] }}')">{{ row[2] }}</a>
+            <form action="/status_vente/{{ row[4] }}" method="POST" class="select-wrapper">
+              <select class="select" name="status" onchange="hideDropdownAndSubmit(this.form, '{{ row[4] }}')">
+                <option disabled selected>Choisissez un statut</option>
+                <option value="Vendu">Vendu</option>
+                <option value="Retourné">Retourné</option>
+                <option value="Annuler">Annuler</option>
+              </select>
+            </form>
+          </li>
+          {% endfor %}
+        </ul>
+        <ul class="details" id="details-details">
+          <li class="topic">details</li>
+          {% for row in dash%}
+          <li><button class="gauche voir-btn1" data-id="{{ row[4] }}"><a href="#"><i class='bx bx-show eyes-icon'
+                  style='font-size: 22px; color:white;'></i></a></button></li>
+          {% endfor %}
+        </ul>
+        <ul class="details" id="details-montant">
+          <li class="topic">Montant</li>
+          {%for row in dash%}
+          <li><a href="#">{{row[3]}}</a></li>
+          {%endfor%}
+        </ul>
+      </div>
+      <div class="button">
+       <a href="#" id="precedent">Précédent</a>
+        <a href="#" id="voir-plus">Voir plus</a>
+      </div>
+    </div>
+
+    <div class="top-sales box">
+      <div class="title">Meilleurs produits</div>
+
+      <ul class="top-sales-details" id="details-sales">
+        {%for product in products%}
+        <li>
+          <a href="#">
+            <img src="{{ url_for('static', filename='image/upload/' ~ product.image) }}" alt="{{ product.nom_produit }}">
+            <span class="product">{{ product.nom_produit }}</span>
+          </a>
+          <span class="price">{{ product.total_quantite }}</span>
+        </li>
+        {%endfor%}
+      </ul>
+      <a href="#" id="Moins" style="text-decoration:none;color:blue;font-size:23px; margin-right:30px;">
+        <i class="fas fa-arrow-left"></i>
+      </a>
+      <a href="#" id="Plus" style="text-decoration:none;color:blue;font-size:23px;">
+        <i class="fas fa-arrow-right"></i></a>
+    </div>
+  </div>
+</div>
+
+<div id="popup121" class="popup121">
+  <div class="popup-content1">
+    <span class="close" id="close-popup11">&times;</span>
+    <p style="color: orange;">Cachet des mentions obligatoires <span class="black-text">FACTURE N°23007Z075</span><span
+        class="orange-text">\0740935</span></p>
+    <div class="signe">
+      <div class="signature"></div>
+      <div class="clients">
+        <p>Date : .................................................</p>
+        <p>Client : ...................................................</p>
+        <p>Adresse : .............................................</p>
+      </div>
+    </div>
+    <form>
+      <table>
+        <thead>
+          <tr>
+            <td>Réf</td>
+            <td>Designation</td>
+            <td>Quantité</td>
+            <td>PU TTC</td>
+            <td>Montant TTC</td>
+          </tr>
+        </thead>
+
+        <tbody>
+
+        </tbody>
+        <thead>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </thead>
+      </table>
+      <div class="signe1">
+        <div class="signature1">Montant total TTC</div>
+        <div class="total1"></div>
+      </div>
+      <p style="color:orange;">Arreté de la presente facture à la somme de
+        .........................................................</p>
+      <p style="color:orange;">
+        .....................................................................................................................................................................
+      </p><br>
+      <p style="color:orange; text-align:center;">Facturation de la TVA non autorisée</p>
+    </form>
+    <div><button class="btn12"><a href="{{url_for('base')}}" style="text-decoration:none;
+    color: #fff;">Retour</a></button>
+      <button id="btn111" onclick="printSection('popup121')">Imprimer</button>
+    </div><br>
+  </div>
+</div>
+
+<script>
+  // Sélectionnez tous les boutons "Voir"
+  var voirButtons = document.querySelectorAll(".voir-btn1");
+
+  // Ajoutez un écouteur d'événements à chaque bouton "Voir"
+  voirButtons.forEach(function (button) {
+    button.addEventListener("click", function () {
+      var rowId = button.getAttribute("data-id");
+      var popup = document.querySelector(".popup121");
+      var rowNum = 1;
+
+      // Faire une requête AJAX pour récupérer les données associées à cette ligne
+      fetch('/donnee_vente/' + rowId)
+        .then(response => response.json())
+        .then(data => {
+          // Afficher les données dans le popup
+          // Exemple : mettre les données dans les cellules du tableau dans le popup
+          var tbody = popup.querySelector('tbody');
+          tbody.innerHTML = ''; // Effacer le contenu précédent
+
+          data.forEach(function (item) {
+            var tr = document.createElement('tr');
+            tr.innerHTML = '<td>' + item.date_commande + '</td>' +
+              '<td>' + item.designation + '</td>' +
+              '<td>' + item.quantite + '</td>' +
+              '<td>' + item.prix_vente + '</td>' +
+              '<td>' + item.montant + '</td>';
+
+            tbody.appendChild(tr);
+
+            rowNum++;
+          });
+
+          // Afficher le popup
+          popup.style.display = "block";
+        })
+        .catch(error => {
+          console.error('Erreur lors de la récupération des données de la ligne:', error);
+        });
+    });
+  });
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const itemsPerPage = 7;
+    let currentPage = 1;
+
+    const detailsSections = [
+        document.getElementById('details-date'),
+        document.getElementById('details-client'),
+        document.getElementById('details-statut'),
+        document.getElementById('details-details'),
+        document.getElementById('details-montant')
+    ];
+
+    function showPage(page) {
+        detailsSections.forEach(section => {
+            const items = section.querySelectorAll('li:not(.topic)');
+            items.forEach((item, index) => {
+                item.style.display = (index >= (page - 1) * itemsPerPage && index < page * itemsPerPage) ? '' : 'none';
+            });
+        });
+    }
+
+    document.getElementById('voir-plus').addEventListener('click', function(e) {
+        e.preventDefault();
+        const totalItems = detailsSections[0].querySelectorAll('li:not(.topic)').length;
+        const totalPages = Math.ceil(totalItems / itemsPerPage);
+        if (currentPage < totalPages) {
+            currentPage++;
+            showPage(currentPage);
+        }
+    });
+
+    document.getElementById('precedent').addEventListener('click', function(e) {
+        e.preventDefault();
+        if (currentPage > 1) {
+            currentPage--;
+            showPage(currentPage);
+        }
+    });
+
+    // Initialiser l'affichage de la première page
+    showPage(currentPage);
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const itemsPerPage = 7;
+    let currentPage = 1;
+
+    const detailsSections = [
+        document.getElementById('details-sales'),
+    ];
+
+    function showPage(page) {
+        detailsSections.forEach(section => {
+            const items = section.querySelectorAll('li:not(.topic)');
+            items.forEach((item, index) => {
+                item.style.display = (index >= (page - 1) * itemsPerPage && index < page * itemsPerPage) ? '' : 'none';
+            });
+        });
+    }
+
+    document.getElementById('Plus').addEventListener('click', function(e) {
+        e.preventDefault();
+        const totalItems = detailsSections[0].querySelectorAll('li:not(.topic)').length;
+        const totalPages = Math.ceil(totalItems / itemsPerPage);
+        if (currentPage < totalPages) {
+            currentPage++;
+            showPage(currentPage);
+        }
+    });
+
+    document.getElementById('moins').addEventListener('click', function(e) {
+        e.preventDefault();
+        if (currentPage > 1) {
+            currentPage--;
+            showPage(currentPage);
+        }
+    });
+
+    // Initialiser l'affichage de la première page
+    showPage(currentPage);
+});
+</script>
+
+{% endblock %}

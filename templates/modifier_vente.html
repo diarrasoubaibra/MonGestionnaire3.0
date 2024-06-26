@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block centre%}
+
+<div class="home-content">
+  <div class="sales-boxes">
+    <div class="recent-sales4 box">
+      <div class="formulaire">
+        <h2>Modification Vente</h2><br>
+
+        <form method="post" action="{{ url_for('modifier_vente', id_vente=vente[0]) }}">
+
+          <label for="client">Client</label>
+          <select id="client" name="client" required>
+              <option value="{{ vente[2] }}" selected>{{ vente[9] }}</option>
+              {% for cl in clients %}
+                  <option value="{{ cl[0] }}" selected>{{ cl[1] }}</option>
+              {% endfor %}
+          </select>
+      
+          <label for="produit">Produit</label>
+          <select id="produit" name="produit" required>
+              <option value="{{ vente[1] }}" selected>{{ vente[8] }}</option>
+              {% for prod in produits %}
+                  <option value="{{ prod[0] }}">{{ prod[1] }}</option>
+              {% endfor %}
+          </select>
+      
+          <label for="nombre">Nombre</label>
+          <input type="number" id="nombre" name="nombre" value="{{ vente[3] }}" required>
+      
+          <label for="prix_vente">Prix unitaire de vente</label>
+          <input type="number" id="prix_vente" name="prix_vente" value="{{ vente[5] }}" required>
+
+          <div><button type="#"><a href="{{url_for('ventes')}}" style="text-decoration:none;
+    color: #fff;">Annuler</a></button>
+            <button type="submit">Confirmer</button>
+          </div>
+        </form>
+      </div>
+    </div><br>
+  </div>
+</div>
+{% endblock %}

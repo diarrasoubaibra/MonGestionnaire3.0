@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<!-- Website - www.codingnepalweb.com -->
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>DL SION COMPAGNIE</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <!-- Boxicons CDN Link -->
+    <link href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css" rel="stylesheet" />
+     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+    {% include "membres/vendeur/nav_bar_vendeur.html"%}
+    <section class="home-section" style="background-image: url({{ url_for('static', filename='image/logo.jpg') }});;">
+
+      {% include "membres/vendeur/header_vendeur.html"%}
+
+      {% block centre%}{% endblock%}
+    </section>
+
+    <script>
+      let sidebar = document.querySelector(".sidebar");
+      let sidebarBtn = document.querySelector(".sidebarBtn");
+      sidebarBtn.onclick = function () {
+        sidebar.classList.toggle("active");
+        if (sidebar.classList.contains("active")) {
+          sidebarBtn.classList.replace("bx-menu", "bx-menu-alt-right");
+        } else sidebarBtn.classList.replace("bx-menu-alt-right", "bx-menu");
+      };
+    </script>
+
+  <!-- Ajouter du code JavaScript pour gérer l'affichage de la liste déroulante -->
+    <!-- Ajouter du code JavaScript pour gérer la sélection d'un élément de la liste déroulante -->
+    <script>
+
+        // Récupérer l'icône de la liste déroulante et le menu déroulant
+        var dropdownIcon = document.getElementById('dropdown-icon');
+        var dropdownMenu = document.getElementById('dropdown-menu');
+        var profileDiv = document.getElementById('profile');
+
+        // Ajouter un écouteur d'événements pour survoler l'icône
+        profileDiv.addEventListener('mouseenter', function() {
+            // Afficher le menu déroulant en dessous de la div de profil
+            dropdownMenu.style.display = 'block';
+            dropdownMenu.style.left = profileDiv.offsetLeft + 'px';
+            dropdownMenu.style.top = profileDiv.offsetTop + profileDiv.offsetHeight + 'px';
+        });
+
+        // Cacher le menu déroulant lorsque l'utilisateur quitte la liste déroulante
+        dropdownMenu.addEventListener('mouseleave', function() {
+            dropdownMenu.style.display = 'none';
+        });
+    </script>
+     <script>
+       // Ouvrir le popup lorsqu'on clique sur le bouton "Ajouter un Produit"
+document.getElementById("open-popup").addEventListener("click", function () {
+    document.getElementById("popup").style.display = "block";
+});
+
+// Fermer le popup lorsqu'on clique sur le bouton de fermeture
+document.getElementById("close-popup").addEventListener("click", function () {
+    document.getElementById("popup").style.display = "none";
+});
+
+// Fermer le popup lorsque l'utilisateur clique en dehors du contenu du popup
+window.onclick = function (event) {
+    var popup = document.getElementById("popup");
+    if (event.target == popup) {
+        popup.style.display = "none";
+    }
+}
+     </script>
+
+   <script>
+
+    document.getElementById("btn1").addEventListener("click", function(){
+	document.querySelector(".form1").style.display = "flex";
+	document.querySelector(".form2").style.display = "none";
+})
+    </script>
+
+  <script>
+
+    document.getElementById("btn2").addEventListener("click", function(){
+	document.querySelector(".form2").style.display = "flex";
+	document.querySelector(".form1").style.display = "none";
+})
+    </script>
+
+  <script>
+    document.getElementById("voir").addEventListener("click", function(){
+	document.querySelector(".popup12").style.display = "block";
+})
+    </script>
+
+  <script>
+    document.getElementById("modif").addEventListener("click", function(){
+	document.querySelector(".popup12").style.display = "block";
+})
+    </script>
+
+  <script>
+    document.getElementById("modifier").addEventListener("click", function(){
+	document.querySelector(".popup12").style.display = "block";
+})
+    </script>
+
+   <script>
+     function addNotification(notificationDetails) {
+    count++;
+    notificationCount.textContent = count;
+
+    const notificationItem = document.createElement("li");
+    notificationItem.innerHTML = `
+        <div>Date: ${notificationDetails.date}</div>
+        <div>Produit: ${notificationDetails.produit}</div>
+        <div>Client: ${notificationDetails.client}</div>
+        <div>Quantité: ${notificationDetails.quantite}</div>
+        <button class="mark-as-read">Lu</button>
+    `;
+    notificationList.appendChild(notificationItem);
+
+    notificationItem.querySelector(".mark-as-read").addEventListener("click", function() {
+        notificationList.removeChild(notificationItem);
+        count--;
+        notificationCount.textContent = count;
+    });
+}
+
+</script>
+
+  </body>
+</html>

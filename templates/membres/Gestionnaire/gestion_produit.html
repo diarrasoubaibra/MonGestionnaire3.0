@@ -1,0 +1,248 @@
+{% extends "membres/gestionnaire/base_gestion.html"%}
+{% block centre%}
+<div class="home-content">
+
+  <div class="overview-boxes">
+        <div class="box1">
+            <div class="right-side">
+                <div class="box-topic">Filtre des produits par catégories</div>
+                <select id="categoriefiltre" name="categoriefiltre" required>
+                    <option value="" disabled selected>Sélectionnez une catégorie</option>
+                    <option >Ordinateurs portables</option>
+                    <option >Ordinateurs bureaux</option>
+                    <option >Accessoires ordinateurs</option>
+                    <option >Accessoires portables</option>
+                    <option >Portables</option>
+                    <option >Accessoires technologie</option>
+                    <option >Imprimantes</option>
+                    <option >Accessoires imprimantes</option>
+                    <option >Onduleurs</option>
+                    <option >Extra</option>
+                    <option >Tout</option>
+                    <!-- Ajoutez d'autres options selon vos besoins -->
+                </select>
+            </div>
+        </div>
+    </div>
+
+   <div class="sales-boxes">
+    <div class="recent-sales box">
+        <div class="title">
+            <p>Liste des produits</p>
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <p class="alert" style="color:green;">{{ message }}</p><br>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            <button id="open-popup">Ajouter un produit</button>
+        </div>
+        <div class="sales-details" id="sales-details">
+            <ul class="details" id="details-ref">
+                <li class="topic">Réf</li>
+                {% for row in resultat %}
+                <li data-category="{{ row[2] }}"><a href="#">{{ row[0] }}</a></li>
+                {% endfor %}
+            </ul>
+            <ul class="details" id="details-name">
+                <li class="topic">Nom</li>
+                {% for row in resultat %}
+                <li data-category="{{ row[2] }}"><a href="#">{{ row[1] }}</a></li>
+                {% endfor %}
+            </ul>
+            <ul class="details" id="details-category">
+                <li class="topic">Catégorie</li>
+                {% for row in resultat %}
+                <li data-category="{{ row[2] }}"><a href="#">{{ row[2] }}</a></li>
+                {% endfor %}
+            </ul>
+            <ul class="details" id="details-price">
+                <li class="topic">Prix</li>
+                {% for row in resultat %}
+                <li data-category="{{ row[2] }}"><a href="#">{{ row[3] }}</a></li>
+                {% endfor %}
+            </ul>
+            <ul class="details" id="details-stock">
+                <li class="topic">Stock</li>
+                {% for row in resultat %}
+                <li data-category="{{ row[2] }}"><a href="#">{{ row[4] }}</a></li>
+                {% endfor %}
+            </ul>
+            <ul class="details" id="details-stock-min">
+                <li class="topic">Stock min</li>
+                {% for row in resultat %}
+                <li data-category="{{ row[2] }}"><a href="#">{{ row[5] }}</a></li>
+                {% endfor %}
+            </ul>
+            <ul class="details" id="details-description">
+                <li class="topic">Désignation</li>
+                {% for row in resultat %}
+                <li data-category="{{ row[2] }}"><a href="#">{{ row[6] }}</a></li>
+                {% endfor %}
+            </ul>
+            <ul class="details" id="details-action">
+                <li class="topic">Action</li>
+                {% for row in resultat %}
+                <li data-category="{{ row[2] }}">
+                    <div class="icon">
+                        <a href="{{ url_for('gestion_modifier_produit', id=row[0]) }}"><i class='bx bx-edit edit-icon' style='font-size: 23px; color: blue;'></i></a>
+                       <i class='bx bx-trash delete-icon' data-id="{{ row[0] }}" style='font-size: 23px; color: red;'></i>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="button">
+            <a href="#" id="voir-plus">Voir plus</a>
+            <a href="#" id="precedent">Précédent</a>
+        </div>
+    </div>
+</div>
+</div>
+
+</div>
+<div id="popup" class="popup">
+  <div class="popup-content">
+    <span class="close" id="close-popup">&times;</span>
+    <h2>Ajout d'un nouveau produit</h2><br>
+
+    <form method="post" action="{{url_for('gestion_produit')}}" enctype="multipart/form-data">
+
+      <label for="nom">Nom du produit</label>
+      <input type="text" id="nom" name="nom" required>
+
+      <label for="categorie">Catégories</label>
+      <select id="categorie" name="categorie" required>
+        <option value="" disabled selected>Sélectionnez une catégorie</option>
+        <option >Ordinateurs portables</option>
+        <option >Ordinateurs bureaux</option>
+        <option >Accessoires Ordinateurs</option>
+        <option >Accessoires portables</option>
+        <option >Portables</option>
+        <option >Accessoires technologie</option>
+        <option >Imprimante</option>
+        <option >Accessoires imprimante</option>
+        <option >Onduleurs</option>
+        <option >Extra</option>
+         <!-- Ajoutez d'autres options selon vos besoins -->
+      </select>
+
+      <label for="prix">Prix d'achat</label>
+      <input type="number" id="prix" name="prix" required>
+
+      <label for="nombre">Ajouter un stock minimum</label>
+      <input type="number" id="nombre" name="nombre" required>
+
+      <label for="stock">Ajouter un stock initial</label>
+      <input type="number" id="stock" name="stock" required>
+
+      <label for="description">Description</label>
+      <textarea id="description" name="description" required></textarea>
+
+      <label for="image">Image</label>
+      <input type="file" id="image" name="image" accept="image/*" required>
+
+      <button type="submit">Ajouter</button>
+    </form>
+  </div>
+
+</div>
+
+<div class="popup0" id="confirmationPopup">
+  <div class="confirmation-container">
+      <h2>Êtes-vous sûr de vouloir supprimer ce Produit?</h2>
+      <form id="deleteForm" method="POST">
+          <button type="submit" class="btn-confirm">Confirmer</button>
+          <button type="button" class="btn-cancel" onclick="closePopup()">Annuler</button>
+      </form>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+      const deleteIcons = document.querySelectorAll('.delete-icon');
+      const popup = document.getElementById('confirmationPopup');
+      const deleteForm = document.getElementById('deleteForm');
+
+      deleteIcons.forEach(icon => {
+          icon.addEventListener('click', function() {
+              const id = this.getAttribute('data-id');
+              deleteForm.action = `/supprimer_produit/${id}`;
+              popup.style.display = 'flex';
+          });
+      });
+  });
+
+  function closePopup() {
+      document.getElementById('confirmationPopup').style.display = 'none';
+  }
+</script>
+
+<script>
+        document.getElementById('categoriefiltre').addEventListener('change', function() {
+            var selectedCategory = this.value;
+            var salesDetailsLists = document.querySelectorAll('.sales-details ul.details');
+
+            salesDetailsLists.forEach(function(list) {
+                var listItems = list.querySelectorAll('li[data-category]');
+                listItems.forEach(function(item) {
+                    if (selectedCategory === "Tout" || selectedCategory === "" || item.getAttribute('data-category') === selectedCategory) {
+                        item.style.display = 'list-item';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const itemsPerPage = 7;
+    let currentPage = 1;
+
+    const detailsSections = [
+        document.getElementById('details-ref'),
+        document.getElementById('details-name'),
+        document.getElementById('details-category'),
+        document.getElementById('details-price'),
+        document.getElementById('details-stock'),
+        document.getElementById('details-stock-min'),
+        document.getElementById('details-description'),
+        document.getElementById('details-action')
+    ];
+
+    function showPage(page) {
+        detailsSections.forEach(section => {
+            const items = section.querySelectorAll('li:not(.topic)');
+            items.forEach((item, index) => {
+                item.style.display = (index >= (page - 1) * itemsPerPage && index < page * itemsPerPage) ? '' : 'none';
+            });
+        });
+    }
+
+    document.getElementById('voir-plus').addEventListener('click', function(e) {
+        e.preventDefault();
+        const totalItems = detailsSections[0].querySelectorAll('li:not(.topic)').length;
+        const totalPages = Math.ceil(totalItems / itemsPerPage);
+        if (currentPage < totalPages) {
+            currentPage++;
+            showPage(currentPage);
+        }
+    });
+
+    document.getElementById('precedent').addEventListener('click', function(e) {
+        e.preventDefault();
+        if (currentPage > 1) {
+            currentPage--;
+            showPage(currentPage);
+        }
+    });
+
+    // Initialiser l'affichage de la première page
+    showPage(currentPage);
+});
+</script>
+
+{% endblock %}

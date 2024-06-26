@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block centre%}
+
+<div class="home-content">
+  <div class="sales-boxes">
+    <div class="recent-sales4 box">
+      <div class="formulaire">
+       <h2>Modification client</h2><br>
+       {% with messages = get_flashed_messages() %}
+       {% if messages %}
+         {% for message in messages %}
+           <p class="alert" style="color:green;">{{ message }}</p><br>
+         {% endfor %}
+       {% endif %}
+     {% endwith %}
+          <form method="post" action="{{ url_for('modifier_client', id=resultat[0])}}">
+
+            <label for="nom">Nom et prénoms</label>
+                  <input type="text" id="nom" name="nom" value="{{resultat[1]}}" required>
+
+                  <label for="tel">Téléphone</label>
+                  <input type="text" id="tel" name="tel" value="{{resultat[2]}}" required>
+
+                  <label for="email">Email</label>
+                  <input type="email" id="email" name="email" value="{{resultat[3]}}" required>
+
+                  <label for="adresse">Adresse</label>
+                  <input type="text" id="adresse" name="adresse" value="{{resultat[4]}}" required>
+
+                  <div><button type="#" ><a href="{{url_for('clients')}}" style="text-decoration:none;
+    color: #fff;">Annuler</a></button>
+                  <button type="submit" >Confirmer</button>
+                </div>
+            </form>
+        </div>
+  </div><br>
+</div>
+  </div>
+{% endblock %}

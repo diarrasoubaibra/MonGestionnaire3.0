@@ -1,0 +1,572 @@
+{% extends "membres/vendeur/base_vendeur.html"%}
+{% block centre%}
+<div class="home-content">
+        <div class="overview-boxes">
+          <div class="box">
+            <div class="right-side">
+              <div class="box-topic">Commandes</div>
+              <div class="number">{{commandejour[0]}}</div>
+              <div class="indicator">
+                <i class="bx bx-up-arrow-alt"></i>
+                <span class="text">Aujourd'hui</span>
+              </div>
+            </div>
+            <i class="bx bx-cart-alt cart"></i>
+          </div>
+          <div class="box">
+            <div class="right-side">
+              <div class="box-topic">En cours</div>
+              <div class="number">{{commandelivre[0]}}</div>
+              <div class="indicator">
+                <i class="bx bx-up-arrow-alt"></i>
+                <span class="text">Commande en cours</span>
+              </div>
+            </div>
+            <i class="bx bxs-cart-add cart two"></i>
+          </div>
+          <div class="box">
+            <div class="right-side">
+              <div class="box-topic">Montant</div>
+              <div class="number">{{montantcommande[0]}}</div>
+              <div class="indicator">
+                <i class="bx bx-down-arrow-alt down"></i>
+                <span class="text">Commande en cours</span>
+              </div>
+            </div>
+            <i class="bx bxs-cart-download cart four"></i>
+          </div>
+        </div>
+
+        <div class="sales-boxes">
+          <div class="recent-sales box">
+           <div class="title">
+                <p>Liste des commandes clients</p>
+                {% with messages = get_flashed_messages() %}
+                  {% if messages %}
+                    {% for message in messages %}
+                      <p class="alert" style="color:green;">{{ message }}</p><br>
+                    {% endfor %}
+                  {% endif %}
+                {% endwith %}
+                <button id="open-popup">Ajouter une commande</button>
+            </div>
+            <div class="sales-details">
+              <ul class="details" id="details-date">
+                <li class="topic">Date de la commande</li>
+               {% for row in resultat %}
+                  <li><a href="#">{{ row[1] }}</a></li>
+                  {% endfor %}
+              </ul>
+
+              <ul class="details" id="details-statut">
+                <li class="topic">Statut</li>
+                {% for row in resultat %}
+                <li>
+                    <a href="#" onclick="toggleDropdown(this, '{{ row[2] }}')">{{ row[2] }}</a>
+                    <form action="/status_commande/{{ row[0] }}" method="POST" class="select-wrapper">
+                        <select class="select" name="status" onchange="hideDropdownAndSubmit(this.form, '{{ row[2] }}')">
+                            <option disabled selected>Choisissez un statut</option>
+                            <option value="En cours">En cours</option>
+                            <option value="Vendu">Vendu</option>
+                            <option value="Annuler">Annuler</option>
+                        </select>
+                    </form>
+                </li>
+                {% endfor %}
+            </ul>
+
+                <ul class="details" id="details-produit">
+                    <li class="topic">Produit</li>
+                    {% for row in resultat %}
+                      <li><a href="#">{{ row[4] }}</a></li>
+                    {% endfor %}
+              </ul>
+              <ul class="details" id="details-details">
+                <li class="topic">details</li>
+                  {% for row in resultat %}
+                    <li><button class="gauche voir-btn1" data-id="{{ row[0] }}"><a href="#"><i class='bx bx-show eyes-icon' style='font-size: 22px; color:white;'></i></a></button></li>
+                  {% endfor %}
+              </ul>
+              <ul class="details" id="details-client">
+                <li class="topic">Nom clients</li>
+                {% for row in resultat %}
+                  <li><a href="#">{{ row[3] }}</a></li>
+                  {% endfor %}
+              </ul>
+            </div>
+            <div class="button">
+              <a href="#" id="precedent">Précédent</a>
+              <a href="#" id="voir-plus">Voir plus</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+<div id="popup121" class="popup121">
+        <div class="popup-content1">
+            <span class="close" id="close-popup11">&times;</span>
+          <p style="color: orange;">Cachet des mentions obligatoires <span class="black-text">FACTURE N°23007Z075</span><span class="orange-text">\0740935</span></p>
+            <div class="signe">
+                <div class="signature"></div>
+                <div class="clients"><p>Date : .................................................</p>
+                    <p>Client : ...................................................</p>
+                    <p>Adresse : .............................................</p>
+                </div>
+            </div>
+            <form>
+              <table>
+                        <thead>
+                            <tr>
+                                <td>Réf</td>
+                                <td>Designation</td>
+                                <td>Quantité</td>
+                                <td>PU TTC</td>
+                                <td>Montant TTC</td>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                        </tbody>
+                     <thead>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </thead>
+                    </table>
+                <div class="signe1">
+                <div class="signature1">Montant total TTC</div>
+                <div class="total1"></div>
+            </div>
+                <p style="color:orange;">Arreté de la presente facture à la somme de .........................................................</p>
+                 <p style="color:orange;">.....................................................................................................................................................................</p><br>
+                 <p style="color:orange; text-align:center;">Facturation de la TVA non autorisée</p>
+            </form>
+            <div><button class="btn12"><a href="{{url_for('vendeur_commande')}}" style="text-decoration:none;
+    color: #fff;">Retour</a></button>
+                <button id="btn111" onclick="printSection('popup121')">Imprimer</button>
+            </div><br>
+        </div>
+</div>
+
+      <div id="popup" class="popup">
+        <div class="popup-content">
+            <span class="close" id="close-popup">&times;</span>
+          <h2>Ajout d'une nouvelle commande</h2><br>
+            <form method="post" action="{{url_for('vendeur_commande')}}" id="stock-form">
+                 <label for="client">Client</label>
+                  <select id="client" name="client" required>
+                      <option value="" disabled selected>Sélectionnez le client</option>
+                      {% for client in clients %}
+                        <option value="{{client[0] }}">{{ client[1] }}</option>
+                      {% endfor %}
+                      <!-- Ajoutez d'autres options selon vos besoins -->
+                  </select>
+
+                  <label for="produit">Produit</label>
+                  <select id="produit" name="produit" required>
+                      <option value="" disabled selected>Sélectionnez un produit</option>
+                      {% for produit in produits %}
+                        <option value="{{ produit[0] }}">{{ produit[1] }}</option>
+                      {% endfor %}
+                      <!-- Ajoutez d'autres options selon vos besoins -->
+                  </select>
+                  <label for="nombre">Nombre</label>
+                  <input type="number" id="nombre" name="nombre" required>
+
+                  <label for="prix">Prix de vente</label>
+                  <input type="number" id="prix" name="prix" required>
+
+                  <button type="#" id="add-button">Ajouter</button>
+
+              <table id="stock-table">
+                        <thead>
+                            <tr>
+                                <td>Id</td>
+                                <td>Designation</td>
+                                <td>Quantité</td>
+                                <td>Prix</td>
+                                <td>Montant</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+            </table>
+              <button type="submit">Valider la commande</button>
+            </form>
+
+        </div>
+    </div>
+
+<div id="popup12" class="popup12">
+        <div class="popup-content1">
+            <span class="close" id="close-popup1">&times;</span>
+          <p style="color: orange;">Cachet des mentions obligatoires <span class="black-text">FACTURE N°23007Z075</span><span class="orange-text">\0740935</span></p>
+            <div class="signe">
+                <div class="signature"></div>
+                <div class="clients"><p>Date : .................................................</p>
+                    <p>Client : ...................................................</p>
+                    <p>Adresse : .............................................</p>
+                </div>
+            </div>
+            <form>
+              <table id="stock-table1">
+                        <thead>
+                            <tr>
+                                <td>Réf</td>
+                                <td>Designation</td>
+                                <td>Quantité</td>
+                                <td>PU TTC</td>
+                                <td>Montant TTC</td>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                        </tbody>
+                     <thead>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </thead>
+                    </table>
+                <div class="signe1">
+                <div class="signature1">Montant total TTC</div>
+                <div class="total"></div>
+            </div>
+                <p style="color:orange;">Arreté de la presente facture à la somme de .........................................................</p>
+                 <p style="color:orange;">.....................................................................................................................................................................</p><br>
+                 <p style="color:orange; text-align:center;">Facturation de la TVA non autorisée</p>
+            </form>
+            <div><button class="btn12"><a href="{{url_for('vendeur_commande')}}" style="text-decoration:none;
+    color: #fff;">Retour</a></button>
+                <button id="btn11" onclick="printSection('popup12')">Imprimer</button>
+            </div><br>
+        </div>
+</div>
+
+<div class="popup0" id="confirmationPopup">
+        <div class="confirmation-container">
+            <h2>Êtes-vous sûr de vouloir supprimer cette commande ?</h2>
+            <form id="deleteForm" method="POST">
+                <button type="submit" class="btn-confirm">Confirmer</button>
+                <button type="button" class="btn-cancel" onclick="closePopup()">Annuler</button>
+            </form>
+        </div>
+</div>
+
+   <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var addButton = document.querySelector('#add-button');
+        var stockTable = document.querySelector('#stock-table tbody');
+        var stockTable1 = document.querySelector('#stock-table1 tbody');
+        var submitButton = document.querySelector('button[type="submit"]');
+        var rowNum = 1;
+
+        addButton.addEventListener('click', function(event) {
+            event.preventDefault();
+
+            var produitId = document.querySelector('#produit').value;
+            var nombre = document.querySelector('#nombre').value;
+            var prix_vente = document.querySelector('#prix').value;
+            var id_client = document.querySelector('#client').value;
+
+            fetch('/get_product_info/' + produitId)
+                .then(response => response.json())
+                .then(data => {
+                    var newRow = document.createElement('tr');
+                    newRow.innerHTML = '<td>' + produitId + '</td>' +
+                                        '<td>' + data.designation + '</td>' +
+                                        '<td>' + nombre + '</td>' +
+                                        '<td>' + prix_vente + '</td>' +
+                                        '<td>' + (nombre * prix_vente) + '</td>' +
+                                        '<td>' + id_client + '</td>' +
+                                        '<td><span class="delete-icon">&times;</span></td>';
+
+                    var newRow1 = document.createElement('tr');
+                    newRow1.innerHTML = '<td>' + rowNum + '</td>' +
+                                        '<td>' + data.designation + '</td>' +
+                                        '<td>' + nombre + '</td>' +
+                                        '<td>' + prix_vente + '</td>' +
+                                        '<td>' + (nombre * prix_vente) + '</td>';
+
+                    stockTable.appendChild(newRow);
+                    stockTable1.appendChild(newRow1);
+
+                    // Add event listener to the delete icon
+                    newRow.querySelector('.delete-icon').addEventListener('click', function() {
+                        stockTable.removeChild(newRow);
+                        stockTable1.removeChild(newRow1);
+                        updateTotal();
+                    });
+
+                    rowNum++;
+                    updateTotal();
+                })
+                .catch(error => {
+                    console.error('Erreur lors de la récupération des informations du produit :', error);
+                });
+        });
+
+        // Fonction pour mettre à jour le total
+        function updateTotal() {
+            var total = 0;
+            var rows = stockTable1.querySelectorAll('tr');
+
+            // Calculer le total à partir des lignes du tableau 1
+            rows.forEach(row => {
+                var cellValue = row.querySelectorAll('td')[4].textContent;
+                total += parseInt(cellValue);
+            });
+
+            // Mettre à jour le contenu de la balise div avec la classe "total"
+            document.querySelector('.total').textContent = total;
+        }
+
+        submitButton.addEventListener('click', function(event) {
+            event.preventDefault();
+
+            var rows = stockTable.querySelectorAll('tr');
+            var orderData = [];
+
+            rows.forEach(row => {
+                var rowData = {
+                    produit_id: parseInt(row.cells[0].textContent),
+                    nombre: parseInt(row.cells[2].textContent),
+                    prix_vente: parseFloat(row.cells[3].textContent),
+                    montant: parseFloat(row.cells[4].textContent),
+                    id_client: parseInt(row.cells[5].textContent),
+                };
+
+                orderData.push(rowData);
+            });
+
+            fetch('/submit_commande', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(orderData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Commande soumise avec succès:', data);
+
+                stockTable.innerHTML = '';
+                alert('Commande soumise avec succès!');
+            })
+            .catch(error => {
+                console.error('Erreur lors de la soumission de la commande:', error);
+                alert('Erreur lors de la soumission de la commande.');
+            });
+
+            document.querySelector(".popup12").style.display = "block";
+        });
+    });
+</script>
+
+<script>
+function printSection(sectionId) {
+    var printContents = document.getElementById(sectionId).innerHTML;
+    var originalContents = document.body.innerHTML;
+
+    document.body.innerHTML = printContents;
+
+    window.print();
+
+    document.body.innerHTML = originalContents;
+}
+</script>
+
+
+<script>
+function printSection(sectionId) {
+    var printContents = document.getElementById(sectionId).innerHTML;
+    var originalContents = document.body.innerHTML;
+
+    document.body.innerHTML = printContents;
+
+    window.print();
+
+    document.body.innerHTML = originalContents;
+}
+</script>
+
+
+<script>
+    // Sélectionnez tous les boutons "Voir"
+    var voirButtons = document.querySelectorAll(".voir-btn1");
+
+    // Ajoutez un écouteur d'événements à chaque bouton "Voir"
+    voirButtons.forEach(function(button) {
+        button.addEventListener("click", function() {
+            var rowId = button.getAttribute("data-id");
+            var popup = document.querySelector(".popup121");
+            var rowNum = 1;
+
+            // Faire une requête AJAX pour récupérer les données associées à cette ligne
+            fetch('/donnee_commande/' + rowId)
+                .then(response => response.json())
+                .then(data => {
+                    // Afficher les données dans le popup
+                    // Exemple : mettre les données dans les cellules du tableau dans le popup
+                    var tbody = popup.querySelector('tbody');
+                    tbody.innerHTML = ''; // Effacer le contenu précédent
+
+                    data.forEach(function(item) {
+                        var tr = document.createElement('tr');
+                        tr.innerHTML = '<td>' + item.date_commande + '</td>' +
+                                       '<td>' + item.designation + '</td>' +
+                                       '<td>' + item.quantite + '</td>' +
+                                       '<td>' + item.prix_vente + '</td>' +
+                                       '<td>' + item.montant + '</td>';
+
+                        tbody.appendChild(tr);
+
+                        rowNum++;
+                    });
+
+                    // Afficher le popup
+                    popup.style.display = "block";
+                })
+                .catch(error => {
+                    console.error('Erreur lors de la récupération des données de la ligne:', error);
+                });
+        });
+    });
+</script>
+
+<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const deleteIcons = document.querySelectorAll('.delete-icon');
+            const popup = document.getElementById('confirmationPopup');
+            const deleteForm = document.getElementById('deleteForm');
+
+            deleteIcons.forEach(icon => {
+                icon.addEventListener('click', function() {
+                    const id = this.getAttribute('data-id');
+                    deleteForm.action = `/supprimer_commande/${id}`;
+                    popup.style.display = 'flex';
+                });
+            });
+        });
+
+        function closePopup() {
+            document.getElementById('confirmationPopup').style.display = 'none';
+        }
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const articlesParPage = 7;
+    let pageActuelle = 1;
+
+    const sectionsDetails = [
+        document.getElementById('details-date'),
+        document.getElementById('details-statut'),
+        document.getElementById('details-produit'),
+        document.getElementById('details-details'),
+        document.getElementById('details-client')
+    ];
+
+    function afficherPage(page) {
+        sectionsDetails.forEach(section => {
+            const articles = section.querySelectorAll('li:not(.topic)');
+            articles.forEach((article, index) => {
+                article.style.display = (index >= (page - 1) * articlesParPage && index < page * articlesParPage) ? '' : 'none';
+            });
+        });
+    }
+
+    document.getElementById('voir-plus').addEventListener('click', function(e) {
+        e.preventDefault();
+        const totalArticles = sectionsDetails[0].querySelectorAll('li:not(.topic)').length;
+        const totalPages = Math.ceil(totalArticles / articlesParPage);
+        if (pageActuelle < totalPages) {
+            pageActuelle++;
+            afficherPage(pageActuelle);
+        }
+    });
+
+    document.getElementById('precedent').addEventListener('click', function(e) {
+        e.preventDefault();
+        if (pageActuelle > 1) {
+            pageActuelle--;
+            afficherPage(pageActuelle);
+        }
+    });
+
+    // Initialiser l'affichage de la première page
+    afficherPage(pageActuelle);
+});
+</script>
+
+{% endblock %}
+
+
+

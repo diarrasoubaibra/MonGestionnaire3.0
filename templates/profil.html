@@ -1,0 +1,106 @@
+{% extends "base.html"%}
+{% block centre%}
+<div class="home-content">
+
+  <div class="sales-boxes">
+    <div class="recent-sales1 box">
+      <div class="title">Profil</div>
+      <p>Tableau de bord / Profil</p><br>
+      <div class="sales-details1">
+        <div class="profil" style="background-image: url({{ url_for('static', filename='image/upload/' + filename) }});"></div>
+        <div class="infos">
+          <div><h3>Nom : {{infos_admin[1]}}</h3><br>
+            <h3>Prénom : {{infos_admin[2]}}</h3><br>
+          <h3>Poste : Responsable</h3><br>
+          <h3>Tel : {{infos_admin[3]}}</h3></div><br>
+          <div><h3>Email : {{infos_admin[4]}}</h3><br>
+          <h3>Entreprise : DL SION COMPAGNY</h3><br></div>
+        </div>
+        <div class="message">
+          <button id="open-popup">Modifier</button>
+          <button>Message</button>
+        </div>
+      </div><br>
+      <div class="sales-details2">
+        <div class="message">
+          <button id="open-popup1">Modifier mes acces</button>
+        </div>
+      </div>
+    </div>
+  </div><br>
+
+</div>
+
+<div id="popup" class="popup">
+  <div class="popup-content">
+    <span class="close" id="close-popup">&times;</span>
+    <h2>Modifications des information du responsable</h2><br>
+    <form method="post" action="{{ url_for('modifier_profil') }}" enctype="multipart/form-data">
+
+      <label for="nom">Nom</label>
+      <input type="text" id="nom" name="nom" required>
+
+      <label for="prenom">Prénom</label>
+      <input type="text" id="prenom" name="prenom" required>
+
+      <label for="tel">Téléphone</label>
+      <input type="tel" id="tel" name="tel" required>
+
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required>
+
+       <label for="image">Photo</label>
+      <input type="file" id="image" name="image" accept="image/*" required>
+
+      <div><button class="btn12"><a href="{{url_for('profil')}}" style="text-decoration:none;
+    color: #fff;">Annuler</a></button>
+                <button  type="submit">Confirmer</button>
+            </div><br>
+    </form>
+  </div>
+</div>
+
+<div id="popup1" class="popup1">
+  <div class="popup-content">
+    <span class="close" id="close-popup1">&times;</span>
+    <h2>Modification de mes access</h2><br>
+    <form method="post" action="{{ url_for('modifier_access') }}">
+      <label for="login">NouveauLogin</label>
+      <input type="text" id="login" name="login" required>
+
+      <label for="motpass">Nouveau Mot de pass</label>
+      <input type="password" id="motpass" name="password" required>
+
+      <label for="confmotpass">Confirmez le mot de pass</label>
+      <input type="password" id="confmotpass" name="confmotpass" required>
+
+      <div><button class="btn12"><a href="{{url_for('profil')}}" style="text-decoration:none;
+    color: #fff;">Annuler</a></button>
+                <button  type="submit">Confirmer</button>
+            </div><br>
+    </form>
+  </div>
+</div>
+
+
+
+<script>
+       // Ouvrir le popup lorsqu'on clique sur le bouton "Ajouter un Produit"
+document.getElementById("open-popup1").addEventListener("click", function () {
+    document.getElementById("popup1").style.display = "block";
+});
+
+// Fermer le popup lorsqu'on clique sur le bouton de fermeture
+document.getElementById("close-popup1").addEventListener("click", function () {
+    document.getElementById("popup1").style.display = "none";
+});
+
+// Fermer le popup lorsque l'utilisateur clique en dehors du contenu du popup
+window.onclick = function (event) {
+    var popup = document.getElementById("popup1");
+    if (event.target == popup) {
+        popup1.style.display = "none";
+    }
+}
+     </script>
+{% endblock %}
